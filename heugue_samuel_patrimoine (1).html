@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HEUGUE Samuel — Outils Patrimoniaux | PER & Succession</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════
+   TOKENS COMMUNS
+════════════════════════════════════════ */
+:root{
+  --red:#e2001a;--red-dark:#a50013;--red-darker:#7a000e;--red-light:#fde8eb;--red-mid:#f06070;
+  --cream:#faf8f5;--warm-gray:#f2ede8;--border:#e8e0d8;
+  --gray-100:#f7f6f6;--gray-200:#ece9e9;--gray-300:#c8c2c2;--gray-500:#7a7272;--gray-800:#2a2424;
+  --white:#ffffff;
+  --shadow-sm:0 1px 6px rgba(162,0,20,.07);--shadow-md:0 4px 20px rgba(162,0,20,.10);
+  --radius:12px;--radius-sm:8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--gray-800);min-height:100vh;overflow-x:hidden;font-size:14px}
+
+/* ── PAGE ROUTING ── */
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+
+/* ── HEADER commun ── */
+.header{position:sticky;top:0;z-index:200;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;box-shadow:0 2px 16px rgba(0,0,0,.18)}
+.header-home{background:rgba(250,248,245,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.header-sim{background:var(--red-dark)}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer}
+.brand-monogram{width:38px;height:38px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:15px;font-weight:700;flex-shrink:0}
+.header-home .brand-monogram{background:var(--red);color:white}
+.header-sim .brand-monogram{background:white;color:var(--red)}
+.brand-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;letter-spacing:-.01em}
+.header-home .brand-name{color:var(--gray-800)}
+.header-sim .brand-name{color:white}
+.brand-sub{font-size:10px;font-weight:300;letter-spacing:.06em;text-transform:uppercase;margin-top:1px}
+.header-home .brand-sub{color:var(--gray-500)}
+.header-sim .brand-sub{color:rgba(255,255,255,.6)}
+.btn-back{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.24);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:rgba(255,255,255,.92);cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0;transition:background .15s}
+.btn-back:hover{background:rgba(255,255,255,.23)}
+.btn-back svg{width:14px;height:14px;fill:rgba(255,255,255,.92);flex-shrink:0}
+.hdr-divider{width:1px;height:26px;background:rgba(255,255,255,.2);flex-shrink:0}
+.hdr-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:4px 14px;font-size:12px;color:rgba(255,255,255,.9);font-weight:500;flex-shrink:0}
+
+/* ══════════════════════════════════════
+   PAGE ACCUEIL
+══════════════════════════════════════ */
+.hero{background:linear-gradient(135deg,var(--red-darker) 0%,var(--red) 100%);padding:5rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-60px;top:-60px;width:340px;height:340px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+.hero::after{content:'';position:absolute;right:80px;bottom:-100px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+.hero-inner{max-width:820px;margin:0 auto;position:relative;z-index:1}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--red-light);border:1px solid rgba(226,0,26,.2);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:600;color:var(--red-dark);letter-spacing:.07em;text-transform:uppercase;margin-bottom:22px}
+.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--red)}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;line-height:1.15;color:var(--white);margin-bottom:18px}
+.hero-title em{font-style:italic;color:var(--red-mid)}
+.hero-desc{font-size:16px;font-weight:300;color:rgba(255,255,255,.75);line-height:1.7;max-width:560px;margin-bottom:34px}
+.hero-stats{display:flex;gap:28px}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat-num{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--red-mid);line-height:1}
+.stat-label{font-size:11px;color:rgba(255,255,255,.65)}
+.stat-divider{width:1px;background:rgba(255,255,255,.2)}
+.section{padding:3.5rem 2rem}
+.section-inner{max-width:1040px;margin:0 auto}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.75rem;padding-bottom:1.1rem;border-bottom:1px solid var(--border)}
+.section-tag{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:5px}
+.section-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:600;color:var(--gray-800)}
+.section-count{font-size:13px;color:var(--gray-500)}
+.sim-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.1rem}
+.sim-card{background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 6px rgba(26,20,16,.07);transition:transform .2s,box-shadow .2s,border-color .2s;text-decoration:none}
+.sim-card.available{cursor:pointer}
+.sim-card.available:hover{transform:translateY(-4px);box-shadow:0 10px 48px rgba(26,20,16,.15);border-color:rgba(226,0,26,.28)}
+.sim-card.soon{opacity:.62;cursor:default}
+.sim-card-stripe{height:4px;background:linear-gradient(90deg,var(--red-darker),var(--red))}
+.sim-card.soon .sim-card-stripe{background:var(--gray-200)}
+.sim-card-body{padding:1.4rem;flex:1;display:flex;flex-direction:column}
+.sim-card-icon{width:46px;height:46px;border-radius:11px;background:var(--red-light);display:flex;align-items:center;justify-content:center;margin-bottom:14px;flex-shrink:0}
+.sim-card.soon .sim-card-icon{background:var(--warm-gray)}
+.sim-card-icon svg{width:22px;height:22px}
+.sim-badge{display:inline-block;padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:9px}
+.badge-active{background:var(--red-light);color:var(--red-dark)}
+.badge-soon{background:var(--warm-gray);color:var(--gray-500)}
+.sim-card-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--gray-800);margin-bottom:7px;line-height:1.3}
+.sim-card-desc{font-size:12.5px;color:var(--gray-500);line-height:1.6;flex:1;font-weight:300}
+.sim-card-footer{padding:.9rem 1.4rem;border-top:1px solid var(--warm-gray);display:flex;align-items:center;justify-content:space-between}
+.sim-tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{font-size:10px;font-weight:500;padding:2px 7px;border-radius:5px;background:var(--warm-gray);color:var(--gray-500)}
+.sim-arrow{width:27px;height:27px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .18s}
+.sim-card.available:hover .sim-arrow{transform:translateX(3px)}
+.sim-arrow svg{width:13px;height:13px;fill:white}
+.sim-card.soon .sim-arrow{background:var(--gray-200)}
+.about-strip{margin:0 2rem 3.5rem;background:linear-gradient(135deg,var(--red-darker) 0%,var(--red) 100%);border-radius:20px;padding:2.75rem 3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;position:relative;overflow:hidden}
+.about-strip::before{content:'HS';position:absolute;right:2.5rem;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-size:8rem;font-weight:700;color:rgba(255,255,255,.06);line-height:1;pointer-events:none}
+.about-text h2{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600;color:white;margin-bottom:7px}
+.about-text p{font-size:13.5px;color:rgba(255,255,255,.72);font-weight:300;max-width:460px;line-height:1.65}
+.about-cta{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.28);border-radius:22px;padding:9px 20px;font-size:13px;font-weight:600;color:white;cursor:pointer;font-family:inherit;white-space:nowrap;transition:background .18s}
+.about-cta:hover{background:rgba(255,255,255,.25)}
+.site-footer{border-top:1px solid var(--border);padding:1.75rem 2rem;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--gray-500)}
+.footer-brand{display:flex;align-items:center;gap:8px;font-family:'Playfair Display',serif;font-size:14px;color:var(--gray-800)}
+.footer-dot{width:7px;height:7px;border-radius:50%;background:var(--red)}
+
+/* ══════════════════════════════════════
+   SIMULATEURS — STYLES COMMUNS
+══════════════════════════════════════ */
+.sim-hero{background:linear-gradient(135deg,var(--red-darker) 0%,var(--red) 100%);padding:1.75rem 2rem 2.75rem;position:relative;overflow:hidden}
+.sim-hero::before{content:'';position:absolute;right:-60px;top:-60px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+.sim-hero::after{content:'';position:absolute;right:70px;bottom:-90px;width:190px;height:190px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+.sim-hero-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.sim-hero-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--red-mid);margin-bottom:6px}
+.sim-hero-title{font-family:'Playfair Display',serif;font-size:1.75rem;font-weight:700;color:white;margin-bottom:5px}
+.sim-hero-sub{font-size:13.5px;color:rgba(255,255,255,.7);font-weight:300;max-width:560px}
+.sim-main{max-width:1100px;margin:0 auto;padding:1.75rem 1.5rem 3.5rem}
+
+/* ── CARD ── */
+.card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--gray-200);overflow:hidden;margin-bottom:1.25rem}
+.card:last-child{margin-bottom:0}
+.card-header{background:var(--red-light);border-bottom:1px solid rgba(226,0,26,.14);padding:.7rem 1.2rem;display:flex;align-items:center;gap:8px}
+.card-header-icon{width:27px;height:27px;background:var(--red);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card-header-icon svg{width:14px;height:14px;fill:white}
+.card-title{font-size:12.5px;font-weight:600;color:var(--red-dark)}
+.card-body{padding:1.2rem}
+
+/* ── FIELDS ── */
+.field{margin-bottom:9px}.field:last-child{margin-bottom:0}
+.field-label,.field label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--gray-500);margin-bottom:7px;display:block}
+.field input[type=text],.field input[type=number],.field select,
+input[type=range]{width:100%}
+.field input[type=text],.field input[type=number],.field select{font-size:13px;padding:7px 10px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-100);color:var(--gray-800);outline:none;font-family:inherit;transition:border-color .15s}
+.field input[type=text]:focus,.field input[type=number]:focus,.field select:focus{border-color:var(--red);background:white}
+.field input[type=number]{-moz-appearance:textfield}
+.field input[type=number]::-webkit-outer-spin-button,.field input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+
+/* ── SLIDERS ── */
+input[type=range]{-webkit-appearance:none;height:4px;border-radius:2px;outline:none;cursor:pointer;background:linear-gradient(to right,var(--red) var(--pct,0%),var(--gray-200) var(--pct,0%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--red);border:3px solid white;box-shadow:0 0 0 1.5px var(--red);cursor:pointer;transition:transform .14s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+.slider-wrap{display:flex;align-items:center;gap:10px}
+.slider-val{font-size:13.5px;font-weight:700;color:var(--red-dark);min-width:82px;text-align:right;white-space:nowrap}
+.slider-minmax{display:flex;justify-content:space-between;font-size:9.5px;color:var(--gray-300);margin-top:2px}
+
+/* ── NUM INPUT ── */
+.num-input-wrap{display:flex;align-items:center}
+.num-input-wrap input[type=number]{flex:1;font-family:inherit;font-size:14.5px;font-weight:600;color:var(--red-dark);padding:8px 11px;border:1.5px solid var(--gray-200);border-right:none;border-radius:var(--radius-sm) 0 0 var(--radius-sm);background:var(--gray-100);outline:none;transition:border-color .14s;-moz-appearance:textfield}
+.num-input-wrap input[type=number]::-webkit-outer-spin-button,.num-input-wrap input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+.num-input-wrap input[type=number]:focus{border-color:var(--red);background:white}
+.num-input-unit{background:var(--red);color:white;font-weight:700;font-size:13.5px;padding:8px 13px;border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+.input-hint{font-size:10.5px;color:var(--gray-500);margin-top:4px}
+.warn-box{display:none;align-items:center;gap:6px;background:#fff4e5;border:1px solid #f5a623;border-radius:var(--radius-sm);padding:6px 10px;font-size:11.5px;color:#8a5500;margin-top:6px;font-weight:500}
+
+/* ── MODE TABS ── */
+.mode-tabs,.strat-tabs{display:flex;gap:4px;margin-bottom:10px}
+.mtab{padding:4px 11px;border:1.5px solid var(--gray-200);border-radius:20px;font-size:11.5px;font-weight:500;cursor:pointer;background:transparent;color:var(--gray-500);transition:all .14s;font-family:inherit}
+.mtab:hover{border-color:var(--red);color:var(--red)}
+.mtab.active{background:var(--red);border-color:var(--red);color:white}
+
+/* ── TOGGLE ── */
+.toggle-row{display:flex;align-items:center;gap:11px;cursor:pointer;margin-bottom:11px;user-select:none}
+.toggle{width:40px;height:22px;border-radius:11px;background:var(--gray-200);position:relative;transition:background .2s;flex-shrink:0}
+.toggle.on{background:var(--red)}
+.toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:white;top:3px;left:3px;box-shadow:0 1px 3px rgba(0,0,0,.18);transition:left .2s}
+.toggle.on::after{left:21px}
+.toggle-label{font-size:12.5px;font-weight:600;color:var(--gray-800)}
+.report-section{overflow:hidden;transition:max-height .35s ease}
+.report-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;align-items:center;margin-bottom:7px}
+.report-grid label{font-size:11.5px;color:var(--gray-500);font-weight:500}
+.report-grid input[type=number]{font-family:inherit;font-size:12.5px;font-weight:600;padding:6px 9px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-100);color:var(--red-dark);outline:none;width:100%;-moz-appearance:textfield;transition:border-color .14s}
+.report-grid input[type=number]:focus{border-color:var(--red);background:white}
+.report-grid input[type=number]::-webkit-outer-spin-button,.report-grid input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+.report-total{background:var(--red-light);border:1px solid rgba(226,0,26,.18);border-radius:var(--radius-sm);padding:9px 13px;display:flex;justify-content:space-between;align-items:center;margin-top:9px}
+.report-total-label{font-size:11.5px;color:var(--red-dark);font-weight:500}
+.report-total-val{font-size:15px;font-weight:700;color:var(--red-dark)}
+
+/* ── SEP ── */
+.sep{display:flex;align-items:center;gap:8px;margin:9px 0;font-size:10.5px;color:var(--gray-300)}
+.sep::before,.sep::after{content:'';flex:1;height:0.5px;background:var(--gray-200)}
+
+/* ── DYNAMIC ROWS ── */
+.dyn-row{display:grid;grid-template-columns:1fr 1fr auto;gap:5px;align-items:center;margin-bottom:5px}
+.dyn-row input,.dyn-row select{font-size:12px;padding:5px 7px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-100);color:var(--gray-800);outline:none;font-family:inherit;width:100%}
+.dyn-row-2{display:grid;grid-template-columns:1fr auto;gap:5px;align-items:center;margin-bottom:5px}
+.dyn-row-2 input{font-size:12px;padding:5px 7px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-100);color:var(--gray-800);outline:none;font-family:inherit;width:100%}
+.btn-rm{padding:4px 8px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);background:transparent;color:var(--gray-500);font-size:12px;cursor:pointer;font-family:inherit;transition:all .14s}
+.btn-rm:hover{background:var(--red-light);border-color:var(--red);color:var(--red-dark)}
+.btn-add{display:flex;align-items:center;gap:5px;padding:5px 10px;border:1.5px dashed var(--gray-200);border-radius:var(--radius-sm);background:transparent;color:var(--gray-500);font-size:11.5px;cursor:pointer;font-family:inherit;margin-top:4px;transition:all .14s}
+.btn-add:hover{border-color:var(--red);color:var(--red);background:var(--red-light)}
+
+/* ── PLAFOND ── */
+.plafond-line{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--gray-100);font-size:12.5px}
+.plafond-line:last-child{border-bottom:none}
+.plafond-line .lbl{color:var(--gray-500)}
+.plafond-line .val{font-weight:600;color:var(--gray-800)}
+.plafond-total-line{display:flex;justify-content:space-between;align-items:center;padding:9px 0 0;margin-top:5px;border-top:2px solid var(--red-light)}
+.plafond-total-line .lbl{font-weight:600;color:var(--gray-800);font-size:12.5px}
+.plafond-total-line .val{font-size:18px;font-weight:700;color:var(--red)}
+.cta-link{display:inline-flex;align-items:center;gap:5px;margin-top:11px;font-size:11.5px;font-weight:600;color:var(--red);cursor:pointer;border:none;background:none;padding:0;font-family:inherit}
+.cta-link:hover{color:var(--red-dark)}
+
+/* ── METRICS PER ── */
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.metric-card{background:var(--gray-100);border-radius:var(--radius-sm);border:1px solid var(--gray-200);padding:13px 15px}
+.metric-card.highlight{background:var(--red-light);border-color:rgba(226,0,26,.18)}
+.metric-label{font-size:10.5px;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.metric-card.highlight .metric-label{color:var(--red-dark)}
+.metric-value{font-size:21px;font-weight:700;color:var(--gray-800)}
+.metric-card.highlight .metric-value{color:var(--red);font-size:23px}
+.tmi-bar-wrap{margin:13px 0 5px}
+.tmi-bar-track{display:flex;height:9px;border-radius:5px;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.07)}
+.tmi-seg{height:100%}
+.tmi-legend{display:flex;gap:9px;flex-wrap:wrap;margin-top:7px}
+.tmi-legend-item{display:flex;align-items:center;gap:4px;font-size:10.5px;color:var(--gray-500)}
+.tmi-legend-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0}
+.tmi-badges{display:flex;align-items:center;gap:7px;margin-top:11px;flex-wrap:wrap}
+.tmi-badge{display:inline-flex;align-items:center;padding:3px 11px;border-radius:20px;font-size:12.5px;font-weight:700}
+.tranche-table{width:100%;border-collapse:collapse;font-size:11.5px}
+.tranche-table th{font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--gray-500);padding:5px 7px;text-align:left;border-bottom:2px solid var(--gray-200);background:var(--gray-100)}
+.tranche-table td{padding:6px 7px;border-bottom:1px solid var(--gray-100)}
+.tranche-table tr.active td{background:var(--red-light);font-weight:600}
+.tranche-table tr.active td:first-child{border-left:3px solid var(--red)}
+.stab{flex:1;padding:7px 5px;font-size:11.5px;font-weight:600;border:none;background:white;color:var(--gray-500);cursor:pointer;border-right:1px solid var(--gray-200);transition:all .14s;font-family:inherit}
+.stab:last-child{border-right:none}
+.stab:hover{background:var(--red-light);color:var(--red-dark)}
+.stab.active{background:var(--red);color:white}
+.strat-tabs{border-radius:var(--radius-sm);overflow:hidden;border:1.5px solid var(--gray-200);gap:0}
+.descente-card{border:2px solid var(--gray-200);border-radius:var(--radius-sm);padding:11px 13px;margin-bottom:7px;cursor:pointer;transition:all .14s;background:white}
+.descente-card:hover{border-color:var(--red);box-shadow:var(--shadow-sm)}
+.descente-card.selected{border-color:var(--red);background:var(--red-light)}
+.descente-card.impossible{opacity:.4;cursor:not-allowed}
+.descente-header-row{display:flex;justify-content:space-between;align-items:center}
+.descente-pills{display:flex;align-items:center;gap:7px}
+.tpill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11.5px;font-weight:700}
+.descente-amount{font-size:14px;font-weight:700;color:var(--red)}
+.descente-detail{font-size:11.5px;color:var(--gray-500);margin-top:4px}
+.reco-box{background:linear-gradient(135deg,var(--red-light),rgba(255,255,255,.5));border:1.5px solid rgba(226,0,26,.18);border-radius:var(--radius-sm);padding:13px 15px;position:relative;overflow:hidden}
+.reco-box::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--red)}
+.reco-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--red-dark);margin-bottom:5px}
+.reco-amount{font-size:26px;font-weight:700;color:var(--red);line-height:1.1;margin:5px 0}
+.reco-detail{font-size:12.5px;color:var(--gray-500)}
+.reco-badge{display:inline-block;margin-top:7px;background:var(--red);color:white;font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:20px}
+.sim-footer-note{text-align:center;font-size:10.5px;color:var(--gray-300);margin-top:1.75rem;padding-bottom:.5rem}
+
+/* ── PER LAYOUT ── */
+.sim-grid-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.sim-col{display:flex;flex-direction:column;gap:1.4rem}
+
+/* ── RECAP CARD (PER & Succession) ── */
+.recap-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--gray-200);overflow:hidden;margin-bottom:1rem}
+.recap-head{background:linear-gradient(135deg,var(--red-darker),var(--red));padding:.8rem 1.2rem;display:flex;align-items:center;gap:8px}
+.recap-head span{font-size:12.5px;font-weight:600;color:white}
+.recap-head svg{width:16px;height:16px;flex-shrink:0}
+.recap-body{padding:1.2rem 1.4rem}
+.recap-body p{font-size:13.5px;line-height:1.75;color:var(--gray-800)}
+
+/* ══════════════════════════════════════
+   SIMULATEUR SUCCESSION — STYLES SPÉC.
+══════════════════════════════════════ */
+.inputs-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+.section-lbl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-500);margin-bottom:8px}
+
+/* Barème contextuel */
+.bareme-ctx{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--gray-200);overflow:hidden;margin-bottom:1.25rem}
+.bareme-head{padding:.7rem 1.2rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--gray-200);background:var(--gray-100)}
+.bareme-title{font-size:12.5px;font-weight:600;color:var(--red-dark);display:flex;align-items:center;gap:7px}
+.bareme-body{padding:1.2rem}
+.bareme-pills-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.abatt-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 13px;border-radius:20px;font-size:11.5px;font-weight:500;background:var(--red-light);color:var(--red-dark);border:1px solid rgba(226,0,26,.2)}
+.exo-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 13px;border-radius:20px;font-size:11.5px;font-weight:500;background:#EAF3DE;color:#27500A;border:1px solid #C0DD97}
+.tranches-bar{display:flex;height:52px;border-radius:var(--radius-sm);overflow:hidden;margin-bottom:8px;border:1px solid var(--gray-200)}
+.tranche-seg-s{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;font-weight:700;padding:4px 3px;min-width:0;overflow:hidden}
+.tmi-row{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:var(--gray-500);flex-wrap:wrap}
+.tmi-badge-s{padding:3px 11px;border-radius:20px;font-size:12px;font-weight:600}
+
+/* KPI succession */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:1.25rem}
+.kpi{border-radius:var(--radius);border:1px solid var(--gray-200);background:var(--white);padding:13px 15px}
+.kpi.kred{border-color:rgba(226,0,26,.25);background:var(--red-light)}
+.kpi.kgreen{border-color:#C0DD97;background:#EAF3DE}
+.kpi.kblue{border-color:#B5D4F4;background:#E6F1FB}
+.kpi-label{font-size:11px;color:var(--gray-500);margin-bottom:3px}
+.kpi.kred .kpi-label{color:var(--red-dark)}.kpi.kgreen .kpi-label{color:#3B6D11}.kpi.kblue .kpi-label{color:#0C447C}
+.kpi-val{font-size:19px;font-weight:700;color:var(--gray-800)}
+.kpi.kred .kpi-val{color:#791F1F}.kpi.kgreen .kpi-val{color:#27500A}.kpi.kblue .kpi-val{color:#0C447C}
+.kpi-sub{font-size:10.5px;color:var(--gray-300);margin-top:2px}
+.kpi.kgreen .kpi-sub{color:#3B6D11;opacity:.8}
+
+/* Barre patrimoine */
+.pat-section{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--gray-200);padding:1.1rem 1.2rem;margin-bottom:1.25rem}
+.pat-bar-track{height:36px;border-radius:var(--radius-sm);overflow:hidden;display:flex;margin:8px 0;border:1px solid var(--gray-200)}
+.pat-seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:white;overflow:hidden;white-space:nowrap;min-width:0}
+.pat-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.pat-leg-i{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--gray-500)}
+.pat-leg-sq{width:11px;height:11px;border-radius:2px;flex-shrink:0}
+
+/* 3 cols */
+.flow-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+.flow-col{border-radius:var(--radius);border:1px solid var(--gray-200);overflow:hidden;display:flex;flex-direction:column;background:var(--white);box-shadow:var(--shadow-sm)}
+.flow-head{padding:10px 14px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:7px}
+.flow-head.neutral{background:var(--gray-100);color:var(--gray-500);border-bottom:1px solid var(--gray-200)}
+.flow-head.teal{background:#E1F5EE;color:#085041;border-bottom:1px solid #9FE1CB}
+.flow-head.green{background:#EAF3DE;color:#3B6D11;border-bottom:1px solid #C0DD97}
+.flow-body{padding:11px 14px;flex:1;display:flex;flex-direction:column;gap:7px}
+.fb{display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.fb .lbl{color:var(--gray-500);display:flex;align-items:center;gap:4px}
+.fb .lbl svg{width:13px;height:13px;flex-shrink:0}
+.fb .val{font-weight:600;color:var(--gray-800);font-size:12.5px}
+.fb.total{border-top:1px solid var(--gray-200);padding-top:8px;margin-top:3px}
+.fb.total .lbl{font-weight:600;color:var(--gray-800);font-size:12.5px}
+.fb.total .val{font-size:15px}
+.val-red{color:#791F1F}.val-teal{color:#085041}.val-green{color:#27500A}
+.delta-badge{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:12px;font-size:10.5px;font-weight:600;margin-top:7px}
+.db-teal{background:#E1F5EE;color:#085041}.db-green{background:#EAF3DE;color:#3B6D11}
+
+/* charts */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+.chart-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--gray-200);padding:1.1rem 1.2rem}
+.chart-title{font-size:11px;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.leg{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;font-size:11px;color:var(--gray-500)}
+.leg-i{display:flex;align-items:center;gap:4px}
+.leg-sq{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* info boxes */
+.info-box{border-radius:var(--radius-sm);padding:9px 13px;font-size:12px;line-height:1.55;margin-top:8px;display:flex;gap:8px;align-items:flex-start;border:1px solid transparent}
+.info-box svg{width:15px;height:15px;flex-shrink:0;margin-top:1px}
+.ib-info{background:#E6F1FB;color:#0C447C;border-color:#B5D4F4}
+.ib-success{background:#EAF3DE;color:#3B6D11;border-color:#C0DD97}
+.ib-warning{background:#FAEEDA;color:#633806;border-color:#FAC775}
+
+@media(max-width:860px){.inputs-grid-3{grid-template-columns:1fr 1fr}.flow-3{grid-template-columns:1fr}.kpi-strip{grid-template-columns:1fr 1fr}.charts-grid{grid-template-columns:1fr}.sim-grid-layout{grid-template-columns:1fr}}
+@media(max-width:560px){.inputs-grid-3{grid-template-columns:1fr}.kpi-strip{grid-template-columns:1fr 1fr}.header{padding:0 1rem}.brand-name{font-size:14px}}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     PAGE : ACCUEIL
+══════════════════════════════════════ -->
+<div class="page active" id="page-home">
+  <header class="header header-home">
+    <div class="brand" onclick="showPage('home')">
+      <div class="brand-monogram">HS</div>
+      <div>
+        <div class="brand-name">HEUGUE Samuel</div>
+        <div class="brand-sub">Gestionnaire de clientèle patrimoniale</div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-eyebrow"><span class="hero-eyebrow-dot"></span>Outils d'optimisation patrimoniale</div>
+      <h1 class="hero-title">Des simulateurs pensés<br>pour <em>votre</em> conseil patrimonial</h1>
+      <p class="hero-desc">Accédez à une suite d'outils de simulation fiscale et patrimoniale, conçus pour accompagner chaque entretien client avec précision et pédagogie.</p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">6</span><span class="stat-label">Simulateurs prévus</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">2</span><span class="stat-label">Disponibles</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">2026</span><span class="stat-label">Barèmes à jour</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div><div class="section-tag">Suite d'outils</div><div class="section-title">Simulateurs patrimoniaux</div></div>
+        <div class="section-count">2 disponibles · 4 à venir</div>
+      </div>
+      <div class="sim-grid">
+
+        <div class="sim-card available" onclick="showPage('per')">
+          <div class="sim-card-stripe"></div>
+          <div class="sim-card-body">
+            <div class="sim-card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="#e2001a"/></svg></div>
+            <span class="sim-badge badge-active">Disponible</span>
+            <div class="sim-card-name">Simulateur PER & IR 2026</div>
+            <div class="sim-card-desc">Optimisation fiscale par versement sur Plan d'Épargne Retraite. Économie d'impôt, TMI, descente de tranche et reports de plafonds N-1, N-2, N-3.</div>
+          </div>
+          <div class="sim-card-footer">
+            <div class="sim-tags"><span class="tag">Fiscal</span><span class="tag">Retraite</span><span class="tag">IR 2026</span></div>
+            <div class="sim-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></div>
+          </div>
+        </div>
+
+        <div class="sim-card available" onclick="showPage('succession')">
+          <div class="sim-card-stripe"></div>
+          <div class="sim-card-body">
+            <div class="sim-card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="#e2001a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <span class="sim-badge badge-active">Disponible</span>
+            <div class="sim-card-name">Droits de succession</div>
+            <div class="sim-card-desc">Calcul des droits selon le lien de parenté, abattements légaux, impact de l'assurance-vie et comparaison de 3 scénarios de transmission.</div>
+          </div>
+          <div class="sim-card-footer">
+            <div class="sim-tags"><span class="tag">Succession</span><span class="tag">Transmission</span><span class="tag">AV</span></div>
+            <div class="sim-arrow"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></div>
+          </div>
+        </div>
+
+        <div class="sim-card soon">
+          <div class="sim-card-stripe"></div>
+          <div class="sim-card-body">
+            <div class="sim-card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3.5 18.5l6-6 4 4L22 6" stroke="#c8c2c2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <span class="sim-badge badge-soon">À venir</span>
+            <div class="sim-card-name">Plus-values mobilières</div>
+            <div class="sim-card-desc">Flat tax, barème progressif, abattements pour durée de détention sur les cessions de valeurs mobilières.</div>
+          </div>
+          <div class="sim-card-footer">
+            <div class="sim-tags"><span class="tag">Fiscal</span><span class="tag">Bourse</span></div>
+            <div class="sim-arrow" style="background:var(--gray-200)"><svg viewBox="0 0 24 24" style="fill:var(--gray-300)"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></div>
+          </div>
+        </div>
+
+        <div class="sim-card soon">
+          <div class="sim-card-stripe"></div>
+          <div class="sim-card-body">
+            <div class="sim-card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 21h18M3 7l9-4 9 4M4 7v14M20 7v14M8 11h2v10H8zm6 0h2v10h-2z" stroke="#c8c2c2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <span class="sim-badge badge-soon">À venir</span>
+            <div class="sim-card-name">Simulateur IFI</div>
+            <div class="sim-card-desc">Estimation de l'Impôt sur la Fortune Immobilière, assiette taxable, exonérations et stratégies de réduction.</div>
+          </div>
+          <div class="sim-card-footer">
+            <div class="sim-tags"><span class="tag">Fiscal</span><span class="tag">Immobilier</span></div>
+            <div class="sim-arrow" style="background:var(--gray-200)"><svg viewBox="0 0 24 24" style="fill:var(--gray-300)"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></div>
+          </div>
+        </div>
+
+        <div class="sim-card soon">
+          <div class="sim-card-stripe"></div>
+          <div class="sim-card-body">
+            <div class="sim-card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#c8c2c2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <span class="sim-badge badge-soon">À venir</span>
+            <div class="sim-card-name">Assurance-Vie</div>
+            <div class="sim-card-desc">Fiscalité des rachats selon l'antériorité du contrat, abattements annuels et impact successoral.</div>
+          </div>
+          <div class="sim-card-footer">
+            <div class="sim-tags"><span class="tag">Épargne</span><span class="tag">Fiscal</span></div>
+            <div class="sim-arrow" style="background:var(--gray-200)"><svg viewBox="0 0 24 24" style="fill:var(--gray-300)"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></div>
+          </div>
+        </div>
+
+        <div class="sim-card soon">
+          <div class="sim-card-stripe"></div>
+          <div class="sim-card-body">
+            <div class="sim-card-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" stroke="#c8c2c2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 22V12h6v10" stroke="#c8c2c2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <span class="sim-badge badge-soon">À venir</span>
+            <div class="sim-card-name">Déficit Foncier</div>
+            <div class="sim-card-desc">Calcul et optimisation du déficit foncier imputable sur le revenu global, reports et simulation pluriannuelle.</div>
+          </div>
+          <div class="sim-card-footer">
+            <div class="sim-tags"><span class="tag">Immobilier</span><span class="tag">Fiscal</span></div>
+            <div class="sim-arrow" style="background:var(--gray-200)"><svg viewBox="0 0 24 24" style="fill:var(--gray-300)"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="about-strip">
+    <div class="about-text">
+      <h2>HEUGUE Samuel</h2>
+      <p>Gestionnaire de clientèle patrimoniale. Ces outils sont conçus pour enrichir l'entretien client, offrir une vision immédiate des impacts fiscaux et faciliter la prise de décision patrimoniale.</p>
+    </div>
+    <button class="about-cta" onclick="alert('samuel.heugue@patrimoine.fr')">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      Me contacter
+    </button>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-brand"><span class="footer-dot"></span>HEUGUE Samuel — Gestion Patrimoniale</div>
+    <div>Barèmes 2025-2026 · Outils à titre indicatif, non contractuels</div>
+  </footer>
+</div><!-- /page-home -->
+
+
+<!-- ══════════════════════════════════════
+     PAGE : SIMULATEUR PER
+══════════════════════════════════════ -->
+<div class="page" id="page-per">
+  <header class="header header-sim">
+    <div style="display:flex;align-items:center;gap:14px">
+      <button class="btn-back" onclick="showPage('home')">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Accueil
+      </button>
+      <div class="hdr-divider"></div>
+      <div class="brand" onclick="showPage('home')">
+        <div class="brand-monogram" style="background:white;color:var(--red)">HS</div>
+        <div><div class="brand-name" style="color:white;font-size:15px">HEUGUE Samuel</div><div class="brand-sub" style="color:rgba(255,255,255,.55)">Gestion Patrimoniale</div></div>
+      </div>
+    </div>
+    <div class="hdr-badge">Simulateur PER 2026</div>
+  </header>
+
+  <div class="sim-hero">
+    <div class="sim-hero-inner">
+      <div class="sim-hero-label">Optimisation fiscale · Plan d'Épargne Retraite</div>
+      <div class="sim-hero-title">Simulateur PER &amp; IR 2026</div>
+      <div class="sim-hero-sub">Calculez l'économie d'impôt de votre client et trouvez le versement optimal selon son profil fiscal.</div>
+    </div>
+  </div>
+
+  <main class="sim-main">
+    <div class="sim-grid-layout">
+      <div class="sim-col">
+        <div class="card">
+          <div class="card-header"><div class="card-header-icon"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg></div><span class="card-title">Situation du client</span></div>
+          <div class="card-body">
+            <div class="field">
+              <span class="field-label">Revenu net imposable</span>
+              <div class="mode-tabs"><button class="mtab active" id="tab-rev-slider" onclick="switchRevMode('slider')">Curseur</button><button class="mtab" id="tab-rev-free" onclick="switchRevMode('free')">Saisie libre</button></div>
+              <div id="mode-rev-slider"><div class="slider-wrap"><input type="range" id="revenu-range" min="0" max="10000000" step="1000" value="80000" oninput="syncRevFromSlider()"><span class="slider-val" id="revenu-display-range">80 000 €</span></div><div class="slider-minmax"><span>0 €</span><span>10 000 000 €</span></div></div>
+              <div id="mode-rev-free" style="display:none"><div class="num-input-wrap"><input type="number" id="revenu-input" min="0" step="100" value="80000" oninput="syncRevFromInput()"><span class="num-input-unit">€</span></div><div class="input-hint">Montant libre, sans plafond</div></div>
+            </div>
+            <div class="field">
+              <span class="field-label">Nombre de parts fiscales</span>
+              <div class="mode-tabs"><button class="mtab active" id="tab-parts-slider" onclick="switchPartsMode('slider')">Curseur</button><button class="mtab" id="tab-parts-free" onclick="switchPartsMode('free')">Saisie libre</button></div>
+              <div id="mode-parts-slider"><div class="slider-wrap"><input type="range" id="parts-range" min="1" max="10" step="0.25" value="2" oninput="syncPartsFromSlider()"><span class="slider-val" id="parts-display">2 parts</span></div><div class="slider-minmax"><span>1 part</span><span>10 parts</span></div></div>
+              <div id="mode-parts-free" style="display:none"><div class="num-input-wrap"><input type="number" id="parts-input" min="1" max="10" step="0.25" value="2" oninput="syncPartsFromInput()"><span class="num-input-unit">parts</span></div><div class="input-hint">De 1 à 10 parts, par paliers de 0,25</div></div>
+            </div>
+            <div class="field">
+              <span class="field-label">Versement PER envisagé</span>
+              <div class="mode-tabs"><button class="mtab active" id="tab-per-slider" onclick="switchPerMode('slider')">Curseur</button><button class="mtab" id="tab-per-free" onclick="switchPerMode('free')">Saisie libre</button></div>
+              <div id="mode-per-slider"><div class="slider-wrap"><input type="range" id="per-range" min="0" max="35194" step="100" value="5000" oninput="syncPerFromSlider()"><span class="slider-val" id="per-display-range">5 000 €</span></div><div class="slider-minmax"><span>0 €</span><span id="per-max-label">—</span></div></div>
+              <div id="mode-per-free" style="display:none"><div class="num-input-wrap"><input type="number" id="per-input" min="0" step="100" value="5000" oninput="syncPerFromInput()"><span class="num-input-unit">€</span></div><div class="input-hint">Plafond disponible : <strong id="per-plafond-hint">—</strong></div><div class="warn-box" id="per-warn">⚠ Dépasse le plafond — simulation limitée au plafond disponible</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="card-title">Plafond PER &amp; reports antérieurs</span></div>
+          <div class="card-body">
+            <div class="toggle-row" onclick="toggleReport()"><div class="toggle" id="toggle-btn"></div><span class="toggle-label">Activer le report N-1, N-2, N-3</span></div>
+            <div class="report-section" id="report-section" style="max-height:0">
+              <p style="font-size:11.5px;color:var(--gray-500);margin-bottom:10px">Saisissez les montants non utilisés (avis d'imposition, page 3).</p>
+              <div class="report-grid"><label>Plafond N-1 non utilisé</label><input type="number" id="report-n1" min="0" step="100" value="0" oninput="update()" placeholder="0"></div>
+              <div class="report-grid"><label>Plafond N-2 non utilisé</label><input type="number" id="report-n2" min="0" step="100" value="0" oninput="update()" placeholder="0"></div>
+              <div class="report-grid"><label>Plafond N-3 non utilisé</label><input type="number" id="report-n3" min="0" step="100" value="0" oninput="update()" placeholder="0"></div>
+              <div class="report-total"><span class="report-total-label">Reports cumulés</span><span class="report-total-val" id="report-total">0 €</span></div>
+            </div>
+            <div id="plafond-zone" style="margin-top:11px"></div>
+            <button class="cta-link" onclick="alert('Retrouvez vos plafonds à la page 3 de votre avis d\'imposition, rubrique « Plafonds d\'épargne retraite ».')">↗ Comment retrouver les plafonds antérieurs ?</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sim-col">
+        <div class="card">
+          <div class="card-header"><div class="card-header-icon"><svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><span class="card-title">Stratégie de versement</span></div>
+          <div class="card-body">
+            <div class="strat-tabs"><button class="stab active" id="strat-manuel" onclick="switchStrat('manuel')">Manuel</button><button class="stab" id="strat-optimal" onclick="switchStrat('optimal')">Optimisation TMI</button><button class="stab" id="strat-descente" onclick="switchStrat('descente')">Descente de tranche</button></div>
+            <div id="zone-manuel"><p style="font-size:12px;color:var(--gray-500)">Ajustez librement le versement via le curseur ou la saisie libre.</p></div>
+            <div id="zone-optimal" style="display:none"><div id="reco-optimal"></div></div>
+            <div id="zone-descente" style="display:none"><p style="font-size:12px;color:var(--gray-500);margin-bottom:9px">Sélectionnez la tranche cible à atteindre.</p><div id="descente-cards"></div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke="white" stroke-width="2" fill="none"/><line x1="3" y1="9" x2="21" y2="9" stroke="white" stroke-width="2"/><line x1="3" y1="15" x2="21" y2="15" stroke="white" stroke-width="2"/><line x1="9" y1="9" x2="9" y2="21" stroke="white" stroke-width="2"/></svg></div><span class="card-title">Barème IR 2026</span></div>
+          <div class="card-body">
+            <table class="tranche-table"><thead><tr><th style="width:18%">Taux</th><th style="width:38%">De</th><th style="width:38%">À</th><th style="width:6%"></th></tr></thead><tbody id="tranche-body"></tbody></table>
+            <div class="tmi-badges"><span style="font-size:10.5px;color:var(--gray-500)">TMI actuelle :</span><span class="tmi-badge" id="tmi-badge">—</span><span style="color:var(--gray-300);font-size:15px">→</span><span style="font-size:10.5px;color:var(--gray-500)">Après PER :</span><span class="tmi-badge" id="tmi-after-badge">—</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="white" stroke-width="2" fill="none"/><path d="M12 7v5l3 3" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div><span class="card-title">Résultats de simulation</span></div>
+          <div class="card-body">
+            <div class="metrics-grid">
+              <div class="metric-card"><div class="metric-label">IR sans PER</div><div class="metric-value" id="ir-avant">—</div></div>
+              <div class="metric-card"><div class="metric-label">IR avec PER</div><div class="metric-value" id="ir-apres">—</div></div>
+              <div class="metric-card highlight"><div class="metric-label">Économie d'impôt</div><div class="metric-value" id="economie">—</div></div>
+              <div class="metric-card"><div class="metric-label">Taux de déduction</div><div class="metric-value" id="taux-ded">—</div></div>
+            </div>
+            <div class="tmi-bar-wrap"><div class="tmi-bar-track" id="tmi-bar"></div><div class="tmi-legend" id="bar-legend"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECAP PER -->
+    <div class="recap-card" style="margin-top:1.4rem">
+      <div class="recap-head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span>Synthèse de la simulation</span>
+      </div>
+      <div class="recap-body"><p id="per-recap-text" style="color:var(--gray-500)">Calcul en cours…</p></div>
+    </div>
+
+    <div class="sim-footer-note">Barème IR 2026 · PASS 2026 = 46 368 € · Plafond PER max = 35 194 € · Simulation à titre indicatif, non contractuelle.</div>
+  </main>
+</div><!-- /page-per -->
+
+
+<!-- ══════════════════════════════════════
+     PAGE : SIMULATEUR SUCCESSION
+══════════════════════════════════════ -->
+<div class="page" id="page-succession">
+  <header class="header header-sim">
+    <div style="display:flex;align-items:center;gap:14px">
+      <button class="btn-back" onclick="showPage('home')">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Accueil
+      </button>
+      <div class="hdr-divider"></div>
+      <div class="brand" onclick="showPage('home')">
+        <div class="brand-monogram" style="background:white;color:var(--red)">HS</div>
+        <div><div class="brand-name" style="color:white;font-size:15px">HEUGUE Samuel</div><div class="brand-sub" style="color:rgba(255,255,255,.55)">Gestion Patrimoniale</div></div>
+      </div>
+    </div>
+    <div class="hdr-badge">Simulateur Succession 2025</div>
+  </header>
+
+  <div class="sim-hero">
+    <div class="sim-hero-inner">
+      <div class="sim-hero-label">Transmission patrimoniale · Droits de succession</div>
+      <div class="sim-hero-title">Simulateur de droits de succession 2025</div>
+      <div class="sim-hero-sub">Calculez les droits selon le lien de parenté, mesurez l'impact de l'assurance-vie et comparez 3 scénarios de transmission.</div>
+    </div>
+  </div>
+
+  <main class="sim-main">
+    <div class="section-lbl">Paramètres de la simulation</div>
+    <div class="inputs-grid-3">
+
+      <div class="card" style="margin-bottom:0">
+        <div class="card-header"><div class="card-header-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M3 7l9-4 9 4M4 7v14M20 7v14M8 11h2v10H8zm6 0h2v10h-2z"/></svg></div><span class="card-title">Patrimoine &amp; succession</span></div>
+        <div class="card-body">
+          <div class="field"><label>Patrimoine brut total</label><input type="number" id="s-actif" value="800000" min="0" step="10000" oninput="computeS()"></div>
+          <div class="field"><label>Passif déductible</label><input type="number" id="s-passif" value="0" min="0" step="1000" oninput="computeS()"></div>
+          <div class="sep">AV existantes — déduites de l'actif</div>
+          <p style="font-size:11px;color:var(--gray-500);margin-bottom:7px">Ces primes sont déduites du patrimoine brut.</p>
+          <div id="s-av-exist-list"></div>
+          <button class="btn-add" onclick="addSAv()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Ajouter un contrat AV</button>
+          <div class="sep">Donations antérieures (rappel 15 ans)</div>
+          <div id="s-dons-list"></div>
+          <button class="btn-add" onclick="addSDon()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Ajouter une donation</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:0;grid-column:span 2">
+        <div class="card-header"><div class="card-header-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" fill="none" stroke="white" stroke-width="1.8"/></svg></div><span class="card-title">Héritiers</span></div>
+        <div class="card-body">
+          <p style="font-size:11.5px;color:var(--gray-500);margin-bottom:10px">Ajoutez chaque héritier avec son prénom, son lien de parenté et sa quote-part. Les montants hérités s'afficheront dans l'arbre généalogique ci-dessous.</p>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:7px;padding:0 2px">
+            <span style="font-size:10.5px;color:var(--gray-300);text-transform:uppercase;letter-spacing:.05em">Prénom</span>
+            <span style="font-size:10.5px;color:var(--gray-300);text-transform:uppercase;letter-spacing:.05em">Lien de parenté</span>
+            <span style="font-size:10.5px;color:var(--gray-300);text-transform:uppercase;letter-spacing:.05em">Quote-part (%)</span>
+            <span style="font-size:10.5px;color:var(--gray-300);text-transform:uppercase;letter-spacing:.05em">Handicap</span>
+          </div>
+          <div id="s-heritiers-list"></div>
+          <button class="btn-add" onclick="addHeritier()" style="margin-top:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Ajouter un héritier</button>
+          <div style="font-size:11px;color:var(--gray-300);margin-top:6px">Le total des quote-parts doit être ≤ 100 %. Le simulateur calcule chaque héritier séparément.</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <div class="card-header"><div class="card-header-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="card-title">Versement AV envisagé</span></div>
+        <div class="card-body">
+          <div class="field"><label>Montant du versement</label><input type="number" id="s-av-montant" value="150000" min="0" step="5000" oninput="computeS()"></div>
+          <div class="field"><label>Âge au versement</label>
+            <select id="s-av-age" onchange="computeS()">
+              <option value="avant70">Avant 70 ans (art. 757 B)</option>
+              <option value="apres70">Après 70 ans (art. 990 I)</option>
+            </select>
+          </div>
+          <div class="field"><label>Rendement annuel estimé (%)</label><input type="number" id="s-av-rdt" value="3.5" min="0" max="20" step="0.5" oninput="computeS()"></div>
+          <div class="field"><label>Durée avant décès (ans)</label><input type="number" id="s-av-duree" value="15" min="1" max="50" step="1" oninput="computeS()"></div>
+          <div class="sep">Récapitulatif</div>
+          <div style="background:var(--gray-100);border-radius:var(--radius-sm);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:3px;border:1px solid var(--gray-200)">
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--gray-500)">Patrimoine brut</span><span id="s-ri-brut">—</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--gray-500)">— AV existantes</span><span id="s-ri-avex" style="color:#a50013">—</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--gray-500)">— Versement envisagé</span><span id="s-ri-avnew" style="color:#0C447C">—</span></div>
+            <div style="display:flex;justify-content:space-between"><span style="color:var(--gray-500)">— Passif</span><span id="s-ri-passif">—</span></div>
+            <div style="display:flex;justify-content:space-between;border-top:1px solid var(--gray-200);padding-top:5px;margin-top:2px;font-weight:600"><span>Actif successoral net</span><span id="s-ri-net">—</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ARBRE GÉNÉALOGIQUE -->
+    <div class="card" style="margin-bottom:1.25rem;overflow:visible">
+      <div class="card-header"><div class="card-header-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><circle cx="12" cy="4" r="2"/><path d="M12 6v4M8 14a4 4 0 018 0"/><circle cx="5" cy="17" r="2"/><circle cx="19" cy="17" r="2"/><line x1="8" y1="10" x2="5" y2="15"/><line x1="16" y1="10" x2="19" y2="15"/></svg></div><span class="card-title">Arbre de transmission — scénario optimal (avec AV)</span></div>
+      <div class="card-body" style="padding:.8rem 1rem">
+        <div id="s-tree-container" style="width:100%;overflow-x:auto;min-height:160px"></div>
+      </div>
+    </div>
+
+    <!-- BAREME CONTEXTUEL -->
+    <div class="bareme-ctx">
+      <div class="bareme-head"><div class="bareme-title" id="s-bareme-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>Barème applicable</div><span style="font-size:10.5px;color:var(--gray-300)">Art. 777 CGI — 2025</span></div>
+      <div class="bareme-body" id="s-bareme-body"></div>
+    </div>
+
+    <!-- KPI -->
+    <div class="section-lbl">Résultats clés</div>
+    <div class="kpi-strip">
+      <div class="kpi kred"><div class="kpi-label">Droits sans AV</div><div class="kpi-val" id="sk0">—</div><div class="kpi-sub" id="sk0s">—</div></div>
+      <div class="kpi"><div class="kpi-label">Droits avec AV existantes</div><div class="kpi-val" id="sk1">—</div><div class="kpi-sub" id="sk1s">—</div></div>
+      <div class="kpi kgreen"><div class="kpi-label">Droits avec AV + versement</div><div class="kpi-val" id="sk2">—</div><div class="kpi-sub" id="sk2s">—</div></div>
+      <div class="kpi kblue"><div class="kpi-label">Économie totale de droits</div><div class="kpi-val" id="sk3">—</div><div class="kpi-sub" id="sk3s">—</div></div>
+    </div>
+
+    <!-- BARRE PATRIMOINE -->
+    <div class="pat-section">
+      <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:11px;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.07em">Composition du patrimoine</span><span style="font-size:13px;font-weight:600;color:var(--gray-800)" id="s-pat-tot">—</span></div>
+      <div class="pat-bar-track" id="s-pat-bar"></div>
+      <div class="pat-legend" id="s-pat-leg"></div>
+    </div>
+
+    <!-- 3 SCÉNARIOS -->
+    <div class="section-lbl">Comparaison des 3 scénarios</div>
+    <div class="flow-3">
+      <div class="flow-col">
+        <div class="flow-head neutral"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 7l9-4 9 4M4 7v14M20 7v14M8 11h2v10H8zm6 0h2v10h-2z"/></svg>Sans assurance-vie</div>
+        <div class="flow-body">
+          <div class="fb"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg>Part brute héritée</span><span class="val" id="ss0-pb">—</span></div>
+          <div class="fb"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>Abattement légal</span><span class="val" id="ss0-ab">—</span></div>
+          <div class="fb"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>Base imposable</span><span class="val" id="ss0-bi">—</span></div>
+          <div class="fb"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>Droits de succession</span><span class="val val-red" id="ss0-dr">—</span></div>
+          <div class="fb total"><span class="lbl">Capital net reçu</span><span class="val val-red" id="ss0-net">—</span></div>
+        </div>
+      </div>
+      <div class="flow-col">
+        <div class="flow-head teal"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Avec AV existantes</div>
+        <div class="flow-body">
+          <div class="fb"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg>Part brute (actif réduit)</span><span class="val" id="ss1-pb">—</span></div>
+          <div class="fb"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>Droits succession</span><span class="val val-teal" id="ss1-dr">—</span></div>
+          <div class="fb"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Capital AV existantes net</span><span class="val" id="ss1-av">—</span></div>
+          <div class="fb total"><span class="lbl">Capital net total</span><span class="val val-teal" id="ss1-net">—</span></div>
+          <div><span class="delta-badge db-teal" id="ss1-delta">—</span></div>
+        </div>
+      </div>
+      <div class="flow-col">
+        <div class="flow-head green"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>AV existantes + versement nouveau</div>
+        <div class="flow-body">
+          <div class="fb"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg>Part brute (actif réduit)</span><span class="val" id="ss2-pb">—</span></div>
+          <div class="fb"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg>Droits succession</span><span class="val val-green" id="ss2-dr">—</span></div>
+          <div class="fb"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Capital AV existantes net</span><span class="val" id="ss2-av-ex">—</span></div>
+          <div class="fb"><span class="lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>Capital AV nouveau net</span><span class="val" id="ss2-av-new">—</span></div>
+          <div class="fb total"><span class="lbl">Capital net total</span><span class="val val-green" id="ss2-net">—</span></div>
+          <div><span class="delta-badge db-green" id="ss2-delta">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRAPHIQUES -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Capital net par scénario</div>
+        <div class="leg"><span class="leg-i"><span class="leg-sq" style="background:#1D9E75"></span>Succession nette</span><span class="leg-i"><span class="leg-sq" style="background:#5DCAA5"></span>AV existantes</span><span class="leg-i"><span class="leg-sq" style="background:#85B7EB"></span>AV nouvelle</span><span class="leg-i"><span class="leg-sq" style="background:#E24B4A"></span>Droits</span></div>
+        <div style="position:relative;width:100%;height:220px"><canvas id="s-ch-bar" role="img" aria-label="Graphique comparatif des 3 scénarios de transmission">Capital net transmis selon les 3 scénarios.</canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20"/></svg>Répartition — scénario optimal</div>
+        <div class="leg" id="s-donut-leg"></div>
+        <div style="position:relative;width:100%;height:220px"><canvas id="s-ch-donut" role="img" aria-label="Répartition du capital transmis dans le scénario optimal">Répartition du patrimoine transmis.</canvas></div>
+      </div>
+    </div>
+
+    <!-- RECAP SUCCESSION -->
+    <div class="recap-card">
+      <div class="recap-head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span>Synthèse de la simulation</span>
+      </div>
+      <div class="recap-body"><p id="s-recap-text" style="color:var(--gray-500)">Calcul en cours…</p></div>
+    </div>
+
+    <div id="s-info-zone"></div>
+    <div class="sim-footer-note">Barèmes droits de succession 2025 · Art. 777 CGI · Simulation à titre indicatif, non contractuelle.</div>
+  </main>
+</div><!-- /page-succession -->
+
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT — ROUTING
+══════════════════════════════════════ -->
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='per')update();
+  if(id==='succession')computeS();
+}
+
+/* ══════════════════════════════════════
+   SIMULATEUR PER — JAVASCRIPT
+══════════════════════════════════════ */
+const TRANCHES=[{min:0,max:11600,taux:0,label:"0%"},{min:11600,max:29579,taux:0.11,label:"11%"},{min:29579,max:84577,taux:0.30,label:"30%"},{min:84577,max:181917,taux:0.41,label:"41%"},{min:181917,max:Infinity,taux:0.45,label:"45%"}];
+const COLORS=["#e8c0c4","#f0808a","#e2001a","#a50013","#7a000e"];
+const TMI_STYLES=[{bg:"#f7f6f6",color:"#7a7272"},{bg:"#fde8eb",color:"#a50013"},{bg:"#fcd0d5",color:"#7a000e"},{bg:"#f9a8b0",color:"#5a0008"},{bg:"#f06070",color:"#3a0005"}];
+let currentRevenu=80000,currentPer=5000,currentParts=2,reportActif=false,stratMode='manuel',selectedDescente=null;
+
+function switchRevMode(m){['slider','free'].forEach(x=>{document.getElementById('tab-rev-'+x).classList.toggle('active',x===m);document.getElementById('mode-rev-'+x).style.display=x===m?'':'none';});}
+function syncRevFromSlider(){currentRevenu=parseInt(document.getElementById('revenu-range').value)||0;document.getElementById('revenu-input').value=currentRevenu;updateSliderFill(document.getElementById('revenu-range'));update();}
+function syncRevFromInput(){currentRevenu=Math.max(0,parseInt(document.getElementById('revenu-input').value)||0);const s=document.getElementById('revenu-range');s.value=Math.min(currentRevenu,10000000);updateSliderFill(s);update();}
+function switchPartsMode(m){['slider','free'].forEach(x=>{document.getElementById('tab-parts-'+x).classList.toggle('active',x===m);document.getElementById('mode-parts-'+x).style.display=x===m?'':'none';});}
+function syncPartsFromSlider(){currentParts=parseFloat(document.getElementById('parts-range').value);document.getElementById('parts-input').value=currentParts;updateSliderFill(document.getElementById('parts-range'));update();}
+function syncPartsFromInput(){let v=parseFloat(document.getElementById('parts-input').value)||1;v=Math.min(Math.max(Math.round(v*4)/4,1),10);currentParts=v;document.getElementById('parts-input').value=v;const s=document.getElementById('parts-range');s.value=v;updateSliderFill(s);update();}
+function switchPerMode(m){['slider','free'].forEach(x=>{document.getElementById('tab-per-'+x).classList.toggle('active',x===m);document.getElementById('mode-per-'+x).style.display=x===m?'':'none';});}
+function syncPerFromSlider(){currentPer=parseInt(document.getElementById('per-range').value)||0;document.getElementById('per-input').value=currentPer;updateSliderFill(document.getElementById('per-range'));update();}
+function syncPerFromInput(){currentPer=Math.max(0,parseInt(document.getElementById('per-input').value)||0);update();}
+function toggleReport(){reportActif=!reportActif;document.getElementById('toggle-btn').classList.toggle('on',reportActif);document.getElementById('report-section').style.maxHeight=reportActif?'300px':'0';update();}
+function getReports(){if(!reportActif)return{n1:0,n2:0,n3:0,total:0};const n1=Math.max(0,parseInt(document.getElementById('report-n1').value)||0),n2=Math.max(0,parseInt(document.getElementById('report-n2').value)||0),n3=Math.max(0,parseInt(document.getElementById('report-n3').value)||0);return{n1,n2,n3,total:n1+n2+n3};}
+function switchStrat(m){stratMode=m;selectedDescente=null;['manuel','optimal','descente'].forEach(s=>{document.getElementById('strat-'+s).classList.toggle('active',s===m);document.getElementById('zone-'+s).style.display=s===m?'':'none';});update();}
+function calcIR(qi){let imp=0;for(const t of TRANCHES){if(qi<=t.min)break;imp+=(Math.min(qi,t.max===Infinity?qi:t.max)-t.min)*t.taux;}return Math.round(imp);}
+function calcIRTotal(rev,parts){return Math.round(calcIR(rev/parts)*parts);}
+function getTMIIndex(rev,parts){const qi=rev/parts;let idx=0;TRANCHES.forEach((t,i)=>{if(qi>t.min)idx=i;});return idx;}
+function fmt(n){return Math.round(n).toLocaleString('fr-FR')+' €';}
+function pct(n){return Math.round(n*100)+' %';}
+function getPlafondAnnuel(rev){return Math.min(Math.max(Math.round(.1*rev),Math.round(.1*46368)),35194);}
+function updateSliderFill(el){const p=(el.value-el.min)/(el.max-el.min)*100;el.style.setProperty('--pct',p+'%');}
+function optimalPer(rev,parts,plafond){const irAv=calcIRTotal(rev,parts);let bestM=0,bestEco=0,bestTaux=0;const step=plafond>100000?500:100;for(let v=step;v<=plafond;v+=step){const eco=irAv-calcIRTotal(Math.max(0,rev-v),parts);if(eco>bestEco){bestEco=eco;bestM=v;bestTaux=eco/v;}}const iA=getTMIIndex(rev,parts),iB=getTMIIndex(Math.max(0,rev-bestM),parts);return{montant:bestM,economie:bestEco,taux:bestTaux,changeTranche:iB<iA,nouvelleTranche:TRANCHES[iB].label};}
+function versementPourDescente(rev,parts,cibleIdx){return Math.ceil((rev/parts-TRANCHES[cibleIdx].max)*parts/100)*100;}
+function calcDescenteOptions(rev,parts,plafond){const tmiIdx=getTMIIndex(rev,parts),irAv=calcIRTotal(rev,parts),opts=[];for(let c=tmiIdx-1;c>=0;c--){const v=versementPourDescente(rev,parts,c),possible=v>0&&v<=plafond;const eco=possible?irAv-calcIRTotal(Math.max(0,rev-v),parts):null;opts.push({de:TRANCHES[tmiIdx],vers:TRANCHES[c],deIdx:tmiIdx,versIdx:c,montant:v,possible,economie:eco,taux:possible&&v>0?eco/v:null});}return opts;}
+function renderDescenteCards(opts,plafond){const c=document.getElementById('descente-cards');if(!opts.length){c.innerHTML='<p style="font-size:12px;color:var(--gray-500)">Déjà dans la tranche à 0 %, aucune descente possible.</p>';return;}c.innerHTML='';opts.forEach(opt=>{const card=document.createElement('div');card.className='descente-card'+(opt===selectedDescente?' selected':'')+(opt.possible?'':' impossible');const s1=TMI_STYLES[opt.deIdx],s2=TMI_STYLES[opt.versIdx];let html=`<div class="descente-header-row"><div class="descente-pills"><span class="tpill" style="background:${s1.bg};color:${s1.color}">${opt.de.label}</span><span style="color:var(--gray-300)">→</span><span class="tpill" style="background:${s2.bg};color:${s2.color}">${opt.vers.label}</span></div>${opt.possible?`<span class="descente-amount">${fmt(opt.montant)}</span>`:'<span style="font-size:11px;color:var(--gray-300)">Hors plafond</span>'}</div>`;if(opt.possible)html+=`<div class="descente-detail">Économie : <strong>${fmt(opt.economie)}</strong> · ${pct(opt.taux)} de déduction</div>`;else html+=`<div class="descente-detail">Versement requis ${fmt(opt.montant)} > plafond ${fmt(plafond)}</div>`;card.innerHTML=html;if(opt.possible){card.onclick=()=>{selectedDescente=opt;currentPer=opt.montant;const pr=document.getElementById('per-range');pr.value=Math.min(opt.montant,plafond);document.getElementById('per-input').value=opt.montant;document.getElementById('per-display-range').textContent=fmt(opt.montant);updateSliderFill(pr);renderDescenteCards(opts,plafond);updateResults(currentRevenu,currentParts,opt.montant,plafond);};}card.appendChild(document.createTextNode(''));c.appendChild(card);});}
+
+function updateResults(revenu,parts,per,plafondTotal){
+  const irAv=calcIRTotal(revenu,parts),revAp=Math.max(0,revenu-per);
+  const irAp=calcIRTotal(revAp,parts),eco=irAv-irAp,taux=per>0?eco/per:0;
+  document.getElementById('ir-avant').textContent=fmt(irAv);
+  document.getElementById('ir-apres').textContent=fmt(irAp);
+  document.getElementById('economie').textContent=fmt(eco);
+  document.getElementById('taux-ded').textContent=pct(taux);
+  const i1=getTMIIndex(revenu,parts),i2=getTMIIndex(revAp,parts);
+  const b1=document.getElementById('tmi-badge');b1.textContent=TRANCHES[i1].label;b1.style.background=TMI_STYLES[i1].bg;b1.style.color=TMI_STYLES[i1].color;
+  const b2=document.getElementById('tmi-after-badge');b2.textContent=TRANCHES[i2].label;b2.style.background=TMI_STYLES[i2].bg;b2.style.color=TMI_STYLES[i2].color;
+  const bar=document.getElementById('tmi-bar'),leg=document.getElementById('bar-legend');bar.innerHTML='';leg.innerHTML='';
+  const total=Math.max(revenu,1);TRANCHES.forEach((t,i)=>{if(t.min>=total)return;const base=Math.min(total,t.max===Infinity?total:t.max)-t.min;bar.innerHTML+=`<div class="tmi-seg" style="width:${(base/total*100).toFixed(1)}%;background:${COLORS[i]}"></div>`;leg.innerHTML+=`<div class="tmi-legend-item"><div class="tmi-legend-dot" style="background:${COLORS[i]}"></div>${t.label}</div>`;});
+  const tbody=document.getElementById('tranche-body');tbody.innerHTML='';const qi=revenu/parts;TRANCHES.forEach((t,i)=>{const active=qi>t.min,maxLabel=t.max===Infinity?'+∞':fmt(t.max*parts);const tr=document.createElement('tr');if(active)tr.className='active';const dot=`<span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${COLORS[i]};margin-right:5px;vertical-align:middle"></span>`;tr.innerHTML=`<td>${dot}<strong>${t.label}</strong></td><td>${fmt(t.min*parts)}</td><td>${maxLabel}</td><td style="text-align:center">${active?'<span style="color:var(--red);font-weight:700">✓</span>':''}</td>`;tbody.appendChild(tr);});
+
+  /* ── PHRASE RECAP PER ── */
+  const irAv2=irAv,irAp2=irAp,eco2=eco;
+  const tmi1=TRANCHES[i1].label,tmi2=TRANCHES[i2].label;
+  const tauxEff=revenu>0?eco2/revenu:0;
+  let recap='';
+  if(per===0){
+    recap=`Sur un revenu net imposable de <strong>${fmt(revenu)}</strong> (${parts} part${parts>1?'s':''}), l'impôt sur le revenu s'élève à <strong>${fmt(irAv2)}</strong> — taux effectif de <strong>${pct(revenu>0?irAv2/revenu:0)}</strong>, tranche marginale à <strong>${tmi1}</strong>. Aucun versement PER n'est renseigné. Utilisez l'optimisation automatique pour calculer l'économie maximale possible.`;
+  } else if(eco2<=0){
+    recap=`Sur un revenu de <strong>${fmt(revenu)}</strong>, un versement PER de <strong>${fmt(per)}</strong> ne génère pas d'économie d'impôt dans ce scénario (revenu inférieur au seuil d'imposition).`;
+  } else {
+    const descenteTranche=i2<i1?` Le versement permet également de <strong>descendre dans la tranche à ${tmi2}</strong> (contre ${tmi1} sans PER) — un avantage fiscal durable sur l'ensemble de la base imposable.`:'';
+    const coutReel=per-eco2;
+    const rendImplicite=per>0?Math.round(eco2/per*1000)/10:0;
+    recap=`En versant <strong>${fmt(per)}</strong> sur le Plan d'Épargne Retraite, votre client <strong>réduit immédiatement son impôt de ${fmt(eco2)}</strong> — son IR passe de <strong>${fmt(irAv2)}</strong> à <strong>${fmt(irAp2)}</strong>. Le coût réel de l'effort d'épargne n'est donc que de <strong>${fmt(coutReel)}</strong> après déduction fiscale, avec un <strong>rendement fiscal immédiat de ${rendImplicite} %</strong> sur le versement (taux de déduction : <strong>${pct(taux)}</strong> à la TMI de <strong>${tmi1}</strong>).${descenteTranche} Ce versement s'inscrit dans un plafond disponible de <strong>${fmt(plafondTotal)}</strong>.`;
+  }
+  const el=document.getElementById('per-recap-text');if(el){el.innerHTML=recap;el.style.color='var(--gray-800)';}
+}
+
+function update(){
+  const revenu=currentRevenu,parts=currentParts,reports=getReports();
+  const plafondAnnuel=getPlafondAnnuel(revenu),plafondTotal=plafondAnnuel+reports.total;
+  document.getElementById('revenu-display-range').textContent=fmt(revenu);document.getElementById('revenu-input').value=revenu;
+  document.getElementById('parts-display').textContent=parts+(parts<=1?' part':' parts');
+  document.getElementById('report-total').textContent=fmt(reports.total);
+  const pr=document.getElementById('per-range');pr.max=plafondTotal;document.getElementById('per-max-label').textContent=fmt(plafondTotal);document.getElementById('per-plafond-hint').textContent=fmt(plafondTotal);updateSliderFill(pr);
+  let per=currentPer;
+  if(stratMode==='optimal'){const opt=optimalPer(revenu,parts,plafondTotal);per=opt.montant;currentPer=per;pr.value=per;document.getElementById('per-input').value=per;document.getElementById('per-display-range').textContent=fmt(per);updateSliderFill(pr);document.getElementById('reco-optimal').innerHTML=`<div class="reco-box"><div class="reco-title">Versement optimal recommandé</div><div class="reco-amount">${fmt(opt.montant)}</div><div class="reco-detail">Économie fiscale : <strong>${fmt(opt.economie)}</strong> · ${pct(opt.taux)} de déduction</div>${opt.changeTranche?`<div class="reco-badge">↓ Bascule en tranche ${opt.nouvelleTranche}</div>`:''}</div>`;}
+  else if(stratMode==='descente'){const opts=calcDescenteOptions(revenu,parts,plafondTotal);if(selectedDescente&&selectedDescente.possible&&selectedDescente.montant<=plafondTotal)per=selectedDescente.montant;else selectedDescente=null;pr.value=Math.min(per,plafondTotal);document.getElementById('per-input').value=per;document.getElementById('per-display-range').textContent=fmt(Math.min(per,plafondTotal));updateSliderFill(pr);renderDescenteCards(opts,plafondTotal);}
+  else{per=Math.max(0,currentPer);pr.value=Math.min(per,plafondTotal);document.getElementById('per-display-range').textContent=fmt(Math.min(per,plafondTotal));document.getElementById('per-input').value=per;updateSliderFill(pr);}
+  const depasse=per>plafondTotal;document.getElementById('per-warn').style.display=depasse?'flex':'none';const perEffectif=depasse?plafondTotal:per;
+  const p10=Math.round(.1*revenu),pMin=Math.round(.1*46368);let html=`<div class="plafond-line"><span class="lbl">10% du revenu net imposable</span><span class="val">${fmt(p10)}</span></div><div class="plafond-line"><span class="lbl">10% du PASS 2026 (plancher)</span><span class="val">${fmt(pMin)}</span></div><div class="plafond-line"><span class="lbl">Plafond annuel (max 35 194 €)</span><span class="val" style="color:var(--red)">${fmt(plafondAnnuel)}</span></div>`;
+  if(reportActif&&reports.total>0){if(reports.n1)html+=`<div class="plafond-line"><span class="lbl" style="padding-left:10px">+ Report N-1</span><span class="val">${fmt(reports.n1)}</span></div>`;if(reports.n2)html+=`<div class="plafond-line"><span class="lbl" style="padding-left:10px">+ Report N-2</span><span class="val">${fmt(reports.n2)}</span></div>`;if(reports.n3)html+=`<div class="plafond-line"><span class="lbl" style="padding-left:10px">+ Report N-3</span><span class="val">${fmt(reports.n3)}</span></div>`;html+=`<div class="plafond-total-line"><span class="lbl">Plafond total disponible</span><span class="val">${fmt(plafondTotal)}</span></div>`;}else{html+=`<p style="font-size:10.5px;color:var(--gray-300);margin-top:5px">Activez le report pour cumuler les plafonds N-1, N-2, N-3.</p>`;}
+  document.getElementById('plafond-zone').innerHTML=html;
+  updateResults(revenu,parts,perEffectif,plafondTotal);updateSliderFill(document.getElementById('revenu-range'));updateSliderFill(document.getElementById('parts-range'));
+}
+['revenu-range','per-range','parts-range'].forEach(id=>{const el=document.getElementById(id);if(el)updateSliderFill(el);});
+document.getElementById('parts-range').addEventListener('input',()=>{updateSliderFill(document.getElementById('parts-range'));update();});
+
+/* ══════════════════════════════════════
+   SIMULATEUR SUCCESSION — JAVASCRIPT
+══════════════════════════════════════ */
+const SBC={conjoint:{abatt:0,exonere:true,label:'Conjoint / PACS'},enfant:{abatt:100000,exonere:false,label:'Enfant',tr:[{max:8072,t:.05},{max:12109,t:.10},{max:15932,t:.15},{max:552324,t:.20},{max:902838,t:.30},{max:1805677,t:.40},{max:Infinity,t:.45}]},'petit-enfant':{abatt:1594,exonere:false,label:'Petit-enfant',tr:[{max:8072,t:.05},{max:12109,t:.10},{max:15932,t:.15},{max:552324,t:.20},{max:902838,t:.30},{max:1805677,t:.40},{max:Infinity,t:.45}]},'petit-enfant-rep':{abatt:100000,exonere:false,label:'Petit-enfant (représentation)',tr:[{max:8072,t:.05},{max:12109,t:.10},{max:15932,t:.15},{max:552324,t:.20},{max:902838,t:.30},{max:1805677,t:.40},{max:Infinity,t:.45}]},parent:{abatt:100000,exonere:false,label:'Parent',tr:[{max:8072,t:.05},{max:12109,t:.10},{max:15932,t:.15},{max:552324,t:.20},{max:902838,t:.30},{max:1805677,t:.40},{max:Infinity,t:.45}]},gp:{abatt:1594,exonere:false,label:'Grand-parent',tr:[{max:8072,t:.05},{max:12109,t:.10},{max:15932,t:.15},{max:552324,t:.20},{max:902838,t:.30},{max:1805677,t:.40},{max:Infinity,t:.45}]},'frere-soeur':{abatt:15932,exonere:false,label:'Frère / Sœur',tr:[{max:24430,t:.35},{max:Infinity,t:.45}]},'neveu-niece':{abatt:7967,exonere:false,label:'Neveu / Nièce',tr:[{max:Infinity,t:.55}]},'oncle-tante':{abatt:1594,exonere:false,label:'Oncle / Tante',tr:[{max:Infinity,t:.55}]},cousin:{abatt:1594,exonere:false,label:'Cousin(e) germain(e)',tr:[{max:Infinity,t:.55}]},tiers:{abatt:1594,exonere:false,label:'Tiers / au-delà 4e degré',tr:[{max:Infinity,t:.60}]}};
+const STAUX=[{t:.05,bg:'#EAF3DE',fg:'#3B6D11'},{t:.10,bg:'#EAF3DE',fg:'#3B6D11'},{t:.15,bg:'#EAF3DE',fg:'#3B6D11'},{t:.20,bg:'#E6F1FB',fg:'#0C447C'},{t:.30,bg:'#FAEEDA',fg:'#633806'},{t:.35,bg:'#FAEEDA',fg:'#633806'},{t:.40,bg:'#FCEBEB',fg:'#791F1F'},{t:.45,bg:'#FCEBEB',fg:'#791F1F'},{t:.55,bg:'#FCEBEB',fg:'#791F1F'},{t:.60,bg:'#FCEBEB',fg:'#791F1F'}];
+function stc(t){return STAUX.find(c=>c.t===t)||{bg:'#F1EFE8',fg:'#5F5E5A'};}
+let sAvExist=[],sAvId=0,sDons=[],sDonId=0,sBarChart=null,sDonutChart=null;
+let sHeritiers=[],sHerId=0;
+function sn(id){return Math.max(0,parseFloat(document.getElementById(id).value)||0);}
+function stxt(id){return(document.getElementById(id).value||'').trim();}
+function sfmt(v){return Math.round(v).toLocaleString('fr-FR')+' €';}
+function sfmtPct(v){return(isNaN(v)||!isFinite(v))?'0 %':(Math.round(v*10)/10)+' %';}
+function sfmtK(v){const r=Math.round(v);return r>=1000000?(r/1000000).toFixed(1)+' M€':r>=1000?(r/1000).toFixed(0)+' k€':r+' €';}
+function addSAv(){sAvExist.push({id:sAvId++,p:0,age:'avant70'});renderSAv();computeS();}
+function removeSAv(id){sAvExist=sAvExist.filter(a=>a.id!==id);renderSAv();computeS();}
+function renderSAv(){document.getElementById('s-av-exist-list').innerHTML=sAvExist.map(a=>`<div class="dyn-row"><input type="number" value="${a.p}" min="0" step="5000" placeholder="Primes €" oninput="sAvExist.find(x=>x.id==${a.id}).p=Math.max(0,parseInt(this.value)||0);computeS()"><select onchange="sAvExist.find(x=>x.id==${a.id}).age=this.value;computeS()"><option value="avant70" ${a.age==='avant70'?'selected':''}>Avant 70 ans</option><option value="apres70" ${a.age==='apres70'?'selected':''}>Après 70 ans</option></select><button class="btn-rm" onclick="removeSAv(${a.id})">✕</button></div>`).join('');}
+function addSDon(){sDons.push({id:sDonId++,m:0});renderSDons();computeS();}
+function removeSDon(id){sDons=sDons.filter(d=>d.id!==id);renderSDons();computeS();}
+function renderSDons(){document.getElementById('s-dons-list').innerHTML=sDons.map(d=>`<div class="dyn-row-2"><input type="number" value="${d.m}" min="0" step="1000" placeholder="Montant €" oninput="sDons.find(x=>x.id==${d.id}).m=Math.max(0,parseInt(this.value)||0);computeS()"><button class="btn-rm" onclick="removeSDon(${d.id})">✕</button></div>`).join('');}
+
+const LIEN_OPTIONS=`<option value="conjoint">Conjoint / PACS</option><option value="enfant" selected>Enfant</option><option value="petit-enfant">Petit-enfant</option><option value="petit-enfant-rep">Petit-enfant (représentation)</option><option value="parent">Parent</option><option value="gp">Grand-parent</option><option value="frere-soeur">Frère / Sœur</option><option value="neveu-niece">Neveu / Nièce</option><option value="oncle-tante">Oncle / Tante</option><option value="cousin">Cousin(e)</option><option value="tiers">Tiers</option>`;
+function addHeritier(){
+  sHeritiers.push({id:sHerId++,nom:'',lien:'enfant',qpct:50,handicap:false});
+  renderHeritiers();computeS();
+}
+function removeHeritier(id){sHeritiers=sHeritiers.filter(h=>h.id!==id);renderHeritiers();computeS();}
+function renderHeritiers(){
+  const el=document.getElementById('s-heritiers-list');
+  if(!el)return;
+  el.innerHTML=sHeritiers.map(h=>`
+    <div style="display:grid;grid-template-columns:repeat(4,1fr) auto;gap:5px;align-items:center;margin-bottom:6px">
+      <input type="text" value="${h.nom}" placeholder="Prénom" style="font-size:12px;padding:5px 8px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-100);color:var(--gray-800);font-family:inherit;outline:none;width:100%"
+        oninput="sHeritiers.find(x=>x.id==${h.id}).nom=this.value;computeS()">
+      <select style="font-size:11.5px;padding:5px 7px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-100);color:var(--gray-800);font-family:inherit;width:100%"
+        onchange="sHeritiers.find(x=>x.id==${h.id}).lien=this.value;computeS()">${LIEN_OPTIONS.replace(`value="${h.lien}"`,`value="${h.lien}" selected`)}</select>
+      <input type="number" value="${h.qpct}" min="0" max="100" step="1" placeholder="%" style="font-size:12px;padding:5px 8px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-100);color:var(--gray-800);font-family:inherit;-moz-appearance:textfield;width:100%"
+        oninput="sHeritiers.find(x=>x.id==${h.id}).qpct=Math.min(100,Math.max(0,parseFloat(this.value)||0));computeS()">
+      <select style="font-size:11.5px;padding:5px 7px;border:1.5px solid var(--gray-200);border-radius:var(--radius-sm);background:var(--gray-100);color:var(--gray-800);font-family:inherit;width:100%"
+        onchange="sHeritiers.find(x=>x.id==${h.id}).handicap=this.value==='oui';computeS()">
+        <option value="non" ${!h.handicap?'selected':''}>Non</option>
+        <option value="oui" ${h.handicap?'selected':''}>Oui (+159 325 €)</option>
+      </select>
+      <button class="btn-rm" onclick="removeHeritier(${h.id})">✕</button>
+    </div>`).join('');
+}
+
+function calcSD(base,lien){const b=SBC[lien];if(!b||b.exonere||!b.tr||base<=0)return{d:0,tm:0};let r=base,c=0,tot=0,tm=0;for(const t of b.tr){if(r<=0)break;const sl=t.max===Infinity?r:Math.min(r,t.max-c);if(sl>0){tot+=sl*t.t;tm=t.t;}r-=sl;c=t.max===Infinity?c+sl:t.max;}return{d:Math.round(tot),tm};}
+function calcSDAV(cap,age,lien,ab){if(age==='avant70'){const b=Math.max(0,cap-152500);return b>0?Math.round(Math.min(b,700000)*.20+Math.max(0,b-700000)*.3125):0;}return calcSD(Math.max(0,cap-30500-ab),lien).d;}
+function sset(id,v){const el=document.getElementById(id);if(el)el.textContent=v;}
+function ssetH(id,v){const el=document.getElementById(id);if(el)el.innerHTML=v;}
+
+function renderBaremeCtx(lien,baseImpos,handicap){
+  const b=SBC[lien];
+  ssetH('s-bareme-title',`<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg> Barème applicable — <strong>${b.label}</strong>`);
+  if(b.exonere){document.getElementById('s-bareme-body').innerHTML=`<div class="bareme-pills-row"><span class="exo-chip">✓ Exonération totale — 0 € de droits de succession (loi TEPA 2007)</span></div><p style="font-size:12.5px;color:var(--gray-500);line-height:1.6">Le conjoint survivant ou partenaire de PACS est totalement exonéré de droits de succession (art. 796-0 bis CGI).</p>`;return;}
+  let segs='';let cursor=0;
+  const abattTotal=(b.exonere?0:b.abatt)+(handicap&&!b.exonere?159325:0);
+  b.tr.forEach(t=>{const c=stc(t.t);const isActive=baseImpos>0&&baseImpos>cursor&&(t.max===Infinity||baseImpos<=t.max);const maxL=t.max===Infinity?'+∞':sfmtK(t.max);segs+=`<div class="tranche-seg-s" style="flex:1;background:${c.bg};opacity:${isActive?1:0.45};${isActive?'outline:2px solid '+c.fg+';outline-offset:-1px;z-index:1;position:relative;':''}"><span style="font-size:14px;font-weight:700;color:${c.fg}">${Math.round(t.t*100)}%</span><span style="font-size:9px;color:${c.fg};opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;padding:0 2px">≤ ${maxL}</span></div>`;cursor=t.max===Infinity?cursor:t.max;});
+  let tmiInfo='';if(baseImpos>0){let cur2=0,active2=b.tr[b.tr.length-1];for(const t of b.tr){if(baseImpos>cur2&&(t.max===Infinity||baseImpos<=t.max)){active2=t;break;}cur2=t.max;}const c=stc(active2.t);tmiInfo=`<div class="tmi-row"><span>Tranche marginale active :</span><span class="tmi-badge-s" style="background:${c.bg};color:${c.fg}">${Math.round(active2.t*100)} %</span><span style="color:var(--gray-300);font-size:11px">sur la base imposable de ${sfmt(baseImpos)}</span></div>`;}
+  document.getElementById('s-bareme-body').innerHTML=`<div class="bareme-pills-row"><span class="abatt-chip">Abattement ${sfmt(b.abatt)}${abattTotal>b.abatt?' + 159 325 € (handicap) = '+sfmt(abattTotal):''}</span></div><div class="tranches-bar">${segs}</div>${tmiInfo}<p style="font-size:11px;color:var(--gray-300);margin-top:8px">${lien==='frere-soeur'?'Exonération totale possible : célibataire/veuf(ve)/divorcé(e), +50 ans ou invalide, domicilié avec le défunt 5 ans.':'Droits calculés par tranches progressives sur la part nette après abattement (art. 777 CGI).'}</p>`;
+}
+
+/* ── Arbre généalogique ── */
+function drawTree(actif, results){
+  const container=document.getElementById('s-tree-container');
+  if(!container)return;
+  const n=results.length;
+  if(n===0){container.innerHTML='<p style="font-size:12px;color:var(--gray-300);padding:1rem;text-align:center">Ajoutez des héritiers pour voir l\'arbre généalogique.</p>';return;}
+
+  const W=Math.max(680,n*180+120), H=200;
+  const cx=W/2, topY=44, botY=152;
+  const nodeW=140, nodeH=72;
+  const xPositions=results.map((_,i)=>Math.round((i+.5)*W/n));
+
+  let svg=`<svg viewBox="0 0 ${W} ${H}" width="100%" xmlns="http://www.w3.org/2000/svg" style="font-family:var(--font-sans,'Source Sans 3',sans-serif)">`;
+
+  /* Défunt — nœud central haut */
+  svg+=`<rect x="${cx-65}" y="4" width="130" height="40" rx="6" fill="#a50013" />`;
+  svg+=`<text x="${cx}" y="20" text-anchor="middle" font-size="11" font-weight="500" fill="white">Défunt</text>`;
+  svg+=`<text x="${cx}" y="35" text-anchor="middle" font-size="11" fill="rgba(255,255,255,.8)">${sfmt(actif)}</text>`;
+
+  /* Ligne horizontale commune */
+  const xMin=xPositions[0],xMax=xPositions[xPositions.length-1];
+  const hLineY=topY+40+20;
+  svg+=`<line x1="${cx}" y1="${topY+40}" x2="${cx}" y2="${hLineY}" stroke="#c8c2c2" stroke-width="1.5"/>`;
+  if(n>1){svg+=`<line x1="${xMin}" y1="${hLineY}" x2="${xMax}" y2="${hLineY}" stroke="#c8c2c2" stroke-width="1.5"/>`;}
+
+  results.forEach((r,i)=>{
+    const x=xPositions[i];
+    const b=SBC[r.lien];
+    const exo=b&&b.exonere;
+    const nodeBg=exo?'#EAF3DE':r.droits>0?'#fde8eb':'#E6F1FB';
+    const nodeBorder=exo?'#639922':r.droits>0?'#a50013':'#185FA5';
+    const labelColor=exo?'#27500A':r.droits>0?'#7a000e':'#0C447C';
+    const label=r.nom||(b?b.label:'Héritier');
+
+    /* Ligne verticale vers héritier */
+    svg+=`<line x1="${x}" y1="${hLineY}" x2="${x}" y2="${botY-nodeH/2}" stroke="#c8c2c2" stroke-width="1.5"/>`;
+
+    /* Nœud héritier */
+    const nx=x-nodeW/2, ny=botY-nodeH/2;
+    svg+=`<rect x="${nx}" y="${ny}" width="${nodeW}" height="${nodeH}" rx="8" fill="${nodeBg}" stroke="${nodeBorder}" stroke-width="1.5"/>`;
+
+    /* Avatar cercle */
+    svg+=`<circle cx="${nx+22}" cy="${ny+nodeH/2}" r="14" fill="${nodeBorder}" opacity=".15"/>`;
+    svg+=`<text x="${nx+22}" y="${ny+nodeH/2+4}" text-anchor="middle" font-size="12" font-weight="600" fill="${nodeBorder}">${label.charAt(0).toUpperCase()}</text>`;
+
+    /* Nom */
+    const dispName=label.length>14?label.slice(0,13)+'…':label;
+    svg+=`<text x="${nx+42}" y="${ny+18}" font-size="11.5" font-weight="600" fill="${labelColor}">${dispName}</text>`;
+    /* Lien */
+    const lienLabel=b?b.label:'—';
+    const dispLien=lienLabel.length>16?lienLabel.slice(0,15)+'…':lienLabel;
+    svg+=`<text x="${nx+42}" y="${ny+32}" font-size="10" fill="${labelColor}" opacity=".75">${dispLien}</text>`;
+    /* Quote-part */
+    svg+=`<text x="${nx+42}" y="${ny+46}" font-size="10" fill="${labelColor}" opacity=".75">${Math.round(r.qpct)} % de la succession</text>`;
+    /* Montant net */
+    const netLabel=exo?'Exonéré':sfmtK(r.netAvecAV);
+    svg+=`<text x="${nx+nodeW/2}" y="${ny+nodeH-8}" text-anchor="middle" font-size="12" font-weight="600" fill="${nodeBorder}">${netLabel}</text>`;
+
+    /* Badge droits si non exo */
+    if(!exo&&r.droits>0){
+      const badgeX=x+nodeW/2-14, badgeY=ny-10;
+      svg+=`<rect x="${badgeX-28}" y="${badgeY-11}" width="56" height="18" rx="9" fill="#e2001a"/>`;
+      svg+=`<text x="${badgeX}" y="${badgeY+1}" text-anchor="middle" font-size="9.5" font-weight="600" fill="white">−${sfmtK(r.droits)}</text>`;
+    }
+  });
+
+  svg+=`</svg>`;
+  container.innerHTML=svg;
+}
+
+function computeS(){
+  const actif=sn('s-actif'),passif=sn('s-passif');
+  const avM=sn('s-av-montant'),avAge=document.getElementById('s-av-age').value;
+  const avR=(parseFloat(document.getElementById('s-av-rdt').value)||0)/100;
+  const avD=Math.max(1,parseInt(document.getElementById('s-av-duree').value)||15);
+  const donTotal=sDons.reduce((s,d)=>s+d.m,0);
+  const avExAv70=sAvExist.filter(a=>a.age==='avant70').reduce((s,a)=>s+a.p,0);
+  const avExAp70=sAvExist.filter(a=>a.age==='apres70').reduce((s,a)=>s+a.p,0);
+  const avExTot=avExAv70+avExAp70;
+  const avCap=Math.round(avM*Math.pow(1+avR,avD));
+
+  /* Héritiers — si aucun, on utilise un héritier enfant fictif à 100% pour les métriques */
+  const hers=sHeritiers.length>0?sHeritiers:[{id:-1,nom:'',lien:'enfant',qpct:100,handicap:false}];
+
+  /* Calcul par héritier */
+  const results=hers.map(h=>{
+    const q=h.qpct/100;
+    const b=SBC[h.lien];
+    const ab=(b.exonere?0:b.abatt)+(h.handicap&&!b.exonere?159325:0);
+
+    /* Scénario 0 : sans AV */
+    const an0=Math.max(0,actif-passif);
+    const pb0=an0*q,bi0=Math.max(0,pb0+donTotal*q-ab);
+    const{d:dr0}=calcSD(bi0,h.lien),net0=Math.max(0,pb0-dr0);
+
+    /* AV existantes */
+    const dAvExAv70=calcSDAV(avExAv70,'avant70',h.lien,ab);
+    const dAvExAp70=calcSDAV(avExAp70*q,'apres70',h.lien,ab);
+    const avExNet=avExAv70-dAvExAv70+(avExAp70*q-dAvExAp70);
+    const an1=Math.max(0,actif-avExTot-passif);
+    const pb1=an1*q,bi1=Math.max(0,pb1+donTotal*q-ab);
+    const{d:dr1}=calcSD(bi1,h.lien),netSucc1=Math.max(0,pb1-dr1),net1=netSucc1+avExNet;
+
+    /* Scénario 2 : AV existantes + nouveau */
+    const an2=Math.max(0,actif-avExTot-avM-passif);
+    const pb2=an2*q,bi2=Math.max(0,pb2+donTotal*q-ab);
+    const{d:dr2}=calcSD(bi2,h.lien);
+    const dAvNew=calcSDAV(avAge==='avant70'?avCap:avM*q,avAge,h.lien,ab);
+    const avNewNet=Math.max(0,avCap-dAvNew);
+    const netSucc2=Math.max(0,pb2-dr2),net2=netSucc2+avExNet+avNewNet;
+    const txEff0=pb0>0?dr0/pb0:0,txEff2=(pb2+avCap)>0?(dr2+dAvNew)/(pb2+avCap):0;
+    const gainAV=net1-net0,gainTot=net2-net0;
+
+    return{nom:h.nom,lien:h.lien,qpct:h.qpct,handicap:h.handicap,
+      pb0,bi0,dr0,net0,txEff0,
+      avExNet,dr1,netSucc1,net1,gainAV,
+      pb2,bi2,dr2,dAvNew,avNewNet,netSucc2,net2,gainTot,txEff2,
+      droits:dr2+dAvNew+dAvExAv70+dAvExAp70,netAvecAV:net2,
+      dAvExAv70,dAvExAp70,avExTot};
+  });
+
+  /* Affichage métriques KPI — basé sur le premier héritier */
+  const r0=results[0];
+  const avExNet0=r0.avExNet,dr10=r0.dr1,dAvExAv70_0=r0.dAvExAv70,dAvExAp70_0=r0.dAvExAp70;
+  sset('sk0',sfmt(r0.dr0));sset('sk0s','Taux effectif : '+sfmtPct(r0.txEff0*100));
+  sset('sk1',sfmt(r0.dr1+r0.dAvExAv70+r0.dAvExAp70));sset('sk1s','Écon. : '+sfmt(Math.max(0,r0.dr0-(r0.dr1+r0.dAvExAv70+r0.dAvExAp70))));
+  sset('sk2',sfmt(r0.dr2+r0.dAvNew+r0.dAvExAv70+r0.dAvExAp70));sset('sk2s','Taux effectif : '+sfmtPct(r0.txEff2*100));
+  sset('sk3',sfmt(Math.max(0,r0.dr0-(r0.dr2+r0.dAvNew))));sset('sk3s',r0.gainTot>0?'+'+sfmt(r0.gainTot)+' de capital':'-');
+
+  /* Récap input */
+  const an2_0=Math.max(0,actif-avExTot-avM-passif);
+  sset('s-ri-brut',sfmt(actif));sset('s-ri-avex',avExTot>0?'− '+sfmt(avExTot):'0 €');sset('s-ri-avnew',avM>0?'− '+sfmt(avM):'0 €');sset('s-ri-passif',passif>0?'− '+sfmt(passif):'0 €');sset('s-ri-net',sfmt(an2_0));
+
+  /* Barre patrimoine */
+  const segs=[{v:an2_0,c:'#5F5E5A',l:'Actif successoral net'},{v:avExTot,c:'#5DCAA5',l:'AV existantes'},{v:avM,c:'#378ADD',l:'Versement AV envisagé'},{v:passif,c:'#E24B4A',l:'Passif'}].filter(x=>x.v>0);
+  const pbar=document.getElementById('s-pat-bar'),pleg=document.getElementById('s-pat-leg');pbar.innerHTML='';pleg.innerHTML='';sset('s-pat-tot',sfmt(actif));
+  segs.forEach(sg=>{const w=Math.max(0,(sg.v/Math.max(actif,1))*100);pbar.innerHTML+=`<div class="pat-seg" style="width:${w.toFixed(1)}%;background:${sg.c}">${w>7?sfmtK(sg.v):''}</div>`;pleg.innerHTML+=`<span class="pat-leg-i"><span class="pat-leg-sq" style="background:${sg.c}"></span>${sg.l} — ${sfmt(sg.v)}</span>`;});
+
+  /* Flow 3 scénarios (1er héritier) */
+  const ab0=(SBC[r0.lien].exonere?0:SBC[r0.lien].abatt)+(r0.handicap&&!SBC[r0.lien].exonere?159325:0);
+  sset('ss0-pb',sfmt(r0.pb0));sset('ss0-ab',sfmt(Math.min(ab0,r0.pb0)));sset('ss0-bi',sfmt(r0.bi0));sset('ss0-dr',sfmt(r0.dr0));sset('ss0-net',sfmt(r0.net0));
+  sset('ss1-pb',sfmt(r0.pb2+(avExTot*(r0.qpct/100))));sset('ss1-dr',sfmt(r0.dr1));sset('ss1-av',sfmt(r0.avExNet));sset('ss1-net',sfmt(r0.net1));
+  ssetH('ss1-delta',r0.gainAV>0?`↑ +${sfmt(r0.gainAV)} vs sans AV`:'Sans gain vs sans AV');
+  sset('ss2-pb',sfmt(r0.pb2));sset('ss2-dr',sfmt(r0.dr2));sset('ss2-av-ex',sfmt(r0.avExNet));sset('ss2-av-new',sfmt(r0.avNewNet));sset('ss2-net',sfmt(r0.net2));
+  ssetH('ss2-delta',r0.gainTot>0?`↑ +${sfmt(r0.gainTot)} vs sans AV`:'Sans gain vs sans AV');
+
+  /* Barème — 1er héritier */
+  renderBaremeCtx(r0.lien,r0.bi0,r0.handicap);
+
+  /* Arbre généalogique */
+  drawTree(actif,results);
+
+  /* Graphiques (1er héritier) */
+  const ctxB=document.getElementById('s-ch-bar');
+  if(sBarChart){sBarChart.destroy();sBarChart=null;}
+  sBarChart=new Chart(ctxB,{type:'bar',data:{labels:['Sans AV','Avec AV existantes','+ Versement nouveau'],datasets:[{label:'Succession nette',data:[Math.round(r0.net0),Math.round(r0.netSucc1),Math.round(r0.netSucc2)],backgroundColor:'#1D9E75',borderSkipped:false,borderRadius:0},{label:'AV existantes nettes',data:[0,Math.round(r0.avExNet),Math.round(r0.avExNet)],backgroundColor:'#5DCAA5',borderSkipped:false,borderRadius:0},{label:'AV nouvelle nette',data:[0,0,Math.round(r0.avNewNet)],backgroundColor:'#85B7EB',borderSkipped:false,borderRadius:0},{label:'Droits',data:[Math.round(r0.dr0),Math.round(r0.dr1+r0.dAvExAv70+r0.dAvExAp70),Math.round(r0.dr2+r0.dAvNew+r0.dAvExAv70+r0.dAvExAp70)],backgroundColor:'#E24B4A',borderRadius:{topLeft:4,topRight:4,bottomLeft:0,bottomRight:0},borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true,grid:{display:false},ticks:{color:'#7a7272',font:{size:10}}},y:{stacked:true,border:{display:false},grid:{color:'rgba(0,0,0,0.04)'},ticks:{color:'#7a7272',font:{size:10},callback:v=>v>=1000000?(v/1000000).toFixed(1)+' M€':v>=1000?(v/1000).toFixed(0)+' k€':v+'€'}}},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{const v=c.raw;return v>0?` ${Math.round(v).toLocaleString('fr-FR')} €`:null;}}}}}});
+
+  const ctxD=document.getElementById('s-ch-donut');
+  if(sDonutChart){sDonutChart.destroy();sDonutChart=null;}
+  const dData=[{v:Math.round(r0.netSucc2),c:'#1D9E75',l:'Succession nette'},{v:Math.round(r0.avExNet),c:'#5DCAA5',l:'AV existantes'},{v:Math.round(r0.avNewNet),c:'#85B7EB',l:'AV nouvelle'},{v:Math.round(r0.dr2),c:'#E24B4A',l:'Droits succession'},{v:Math.round(r0.dAvNew+r0.dAvExAv70+r0.dAvExAp70),c:'#F09595',l:'Droits AV'}].filter(d=>d.v>0);
+  const dTot=dData.reduce((s,d)=>s+d.v,0);
+  document.getElementById('s-donut-leg').innerHTML=dData.map(d=>`<span class="leg-i"><span class="leg-sq" style="background:${d.c}"></span>${d.l} (${sfmtPct(dTot>0?d.v/dTot*100:0)})</span>`).join('');
+  sDonutChart=new Chart(ctxD,{type:'doughnut',data:{labels:dData.map(d=>d.l),datasets:[{data:dData.map(d=>d.v),backgroundColor:dData.map(d=>d.c),borderWidth:2,borderColor:'#fff',hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{const v=c.raw,p=sfmtPct(dTot>0?v/dTot*100:0);return ` ${Math.round(v).toLocaleString('fr-FR')} € (${p})`;}}}}
+}});
+
+  /* Phrase récapitulative — tous héritiers */
+  const ll=SBC[r0.lien].label;
+  const pctG=r0.net0>0?Math.round(r0.gainTot/r0.net0*100):0;
+  const nomH=r0.nom||(sHeritiers.length===0?ll:null);
+  const autresH=results.slice(1).map(r=>r.nom||SBC[r.lien].label).filter(Boolean);
+  const tousH=nomH?[nomH,...autresH]:autresH.length?autresH:[ll];
+  const hLabel=tousH.length===1?`<strong>${tousH[0]}</strong>`:tousH.slice(0,-1).map(n=>`<strong>${n}</strong>`).join(', ')+` et <strong>${tousH[tousH.length-1]}</strong>`;
+  let recap='';
+  if(SBC[r0.lien].exonere&&results.length===1){recap=`${hLabel} est <strong>totalement exonéré</strong> de droits de succession. Le patrimoine brut de <strong>${sfmt(actif)}</strong> est transmis intégralement en franchise d'impôt (loi TEPA 2007).`;}
+  else if(results.length>1){
+    const totalDroits=results.reduce((s,r)=>s+r.droits,0);
+    const totalNet=results.reduce((s,r)=>s+r.netAvecAV,0);
+    const lignes=results.map(r=>`${r.nom?`<strong>${r.nom}</strong>`:('<strong>'+SBC[r.lien].label+'</strong>')} reçoit <strong>${sfmt(r.netAvecAV)}</strong> nets (${Math.round(r.qpct)} %)`);
+    recap=`Sur un patrimoine brut de <strong>${sfmt(actif)}</strong>, la succession est répartie entre ${hLabel}. Dans le scénario optimal (avec assurance-vie), le capital net total transmis s'élève à <strong>${sfmt(totalNet)}</strong> après <strong>${sfmt(totalDroits)}</strong> de droits : ${lignes.join(' ; ')}.`;
+  }
+  else if(r0.gainTot<=0&&r0.gainAV<=0&&avExTot===0){recap=`Sur un patrimoine brut de <strong>${sfmt(actif)}</strong>, ${hLabel} recevrait <strong>${sfmt(r0.net0)}</strong> nets, après acquittement de <strong>${sfmt(r0.dr0)}</strong> de droits de succession (taux effectif de <strong>${sfmtPct(r0.txEff0*100)}</strong>).`;}
+  else if(avM===0&&avExTot>0){recap=`Grâce aux <strong>${sfmt(avExTot)}</strong> placés en assurance-vie, ${hLabel} recevrait <strong>${sfmt(r0.net1)}</strong> nets, contre <strong>${sfmt(r0.net0)}</strong> sans assurance-vie — soit <strong>+${sfmt(r0.gainAV)}</strong> de capital supplémentaire et <strong>${sfmt(Math.max(0,r0.dr0-r0.dr1))}</strong> de droits économisés.`;}
+  else if(avM>0){recap=`En combinant${avExTot>0?' les <strong>'+sfmt(avExTot)+'</strong> de contrats AV existants et':''} un versement de <strong>${sfmt(avM)}</strong>${avR>0?' (valorisé à '+sfmt(avCap)+' dans '+avD+' ans à '+(avR*100).toFixed(1)+' %/an)':''}, ${hLabel} recevrait <strong>${sfmt(r0.net2)}</strong> nets — contre <strong>${sfmt(r0.net0)}</strong> sans assurance-vie. Soit <strong>+${sfmt(r0.gainTot)}</strong> de capital supplémentaire (+${pctG} %) et <strong>${sfmt(Math.max(0,r0.dr0-r0.dr2-r0.dAvNew))}</strong> de droits économisés.`;}
+  else{recap=`Sur un patrimoine brut de <strong>${sfmt(actif)}</strong>, ${hLabel} recevrait <strong>${sfmt(r0.net0)}</strong> nets après <strong>${sfmt(r0.dr0)}</strong> de droits de succession.`;}
+  const sRel=document.getElementById('s-recap-text');if(sRel){sRel.innerHTML=recap;sRel.style.color='var(--gray-800)';}
+
+  let info='';
+  if(avAge==='avant70'&&avM>0)info+=`<div class="info-box ib-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Versement avant 70 ans (art. 757 B) : abattement <strong>152 500 €</strong> / bénéficiaire. Les intérêts capitalisés sont totalement exonérés.</span></div>`;
+  if(avAge==='apres70'&&avM>0)info+=`<div class="info-box ib-warning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span>Versement après 70 ans (art. 990 I) : abattement global de <strong>30 500 €</strong> tous bénéficiaires. Préférer les versements avant 70 ans.</span></div>`;
+  if(results.some(r=>r.lien==='frere-soeur'))info+=`<div class="info-box ib-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Exonération totale possible si : célibataire/veuf(ve)/divorcé(e), âgé(e) de + 50 ans ou invalide, domicilié avec le défunt 5 ans.</span></div>`;
+  if(donTotal>0)info+=`<div class="info-box ib-info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Donations antérieures : <strong>${sfmt(donTotal)}</strong> rappelés fiscalement. Les abattements se rechargent tous les 15 ans.</span></div>`;
+  document.getElementById('s-info-zone').innerHTML=info;
+}
+
+document.getElementById('s-av-age').addEventListener('change',computeS);
+
+/* Init héritiers : 2 enfants par défaut */
+addHeritier();
+addHeritier();
+sHeritiers[0].nom='';sHeritiers[1].nom='';
+sHeritiers[0].qpct=50;sHeritiers[1].qpct=50;
+renderHeritiers();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+update();
+computeS();
+</script>
+</body>
+</html>
